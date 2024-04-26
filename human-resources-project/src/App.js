@@ -1,11 +1,20 @@
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Register from './pages/Register/Register';
+import Login from './pages/Login/LoginPage';
+import AdminPanel from './pages/Admin/AdminPanel'; 
 
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <BrowserRouter>
+    <Routes>
+         <Route path='/' element={<Home />}/>
+         <Route path='/register' element={<Register />}/>
+         <Route path='/login' element={<Login />}/>
+         <Route path='/admin-panel' element={<AdminPanel />}/>
+    </Routes>
+      </BrowserRouter>
   );
 }
 
