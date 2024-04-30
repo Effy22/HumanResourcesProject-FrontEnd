@@ -1,5 +1,8 @@
 import './Login.css';
 import { useRef, useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login(){
 
@@ -13,11 +16,11 @@ function Login(){
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const login = () => {
+	/*const login = () => {
 		dispatch(fetchLogin ({username, password})). then(() => {
 			navigate.call(null, '/admin-panel');
 		});
-	}
+	} */
 
 
     useEffect(() => {
