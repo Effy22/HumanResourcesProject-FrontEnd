@@ -1,11 +1,24 @@
 import './Login.css';
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 function Login(){
 
 	const sign_in_btn = useRef(null);
     const sign_up_btn = useRef(null);
     const container = useRef(null);
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const login = () => {
+		dispatch(fetchLogin ({username, password})). then(() => {
+			navigate.call(null, '/admin-panel');
+		});
+	}
+
 
     useEffect(() => {
         const signInBtn = document.querySelector("#sign-in-btn");;
@@ -38,11 +51,7 @@ function Login(){
 
 
 
-
-
     return(
- 
-
       <>
      <div className="container">
 		<div className="forms-container">
@@ -51,11 +60,11 @@ function Login(){
 					<h2 className="title">Sign in</h2>
 					<div className="input-field">
 						<i class="fas fa-user"></i>
-						<input type="text" placeholder="E-Mail" />
+						<input onChange={(evt) => {setEmail(evt.target.value)}} type="text" placeholder="E-Mail" />
 					</div>
 					<div className="input-field">
 						<i className="fas fa-lock"></i>
-						<input type="password" placeholder="Password" />
+						<input onChange={(evt) => {setPassword(evt.target.value)}} type="password" placeholder="Password" />
 					</div>
 					<input type="submit" value="Login" className="btn solid" />
 					
