@@ -1,3 +1,16 @@
+# To Do List:
+
+   (+) 1- config paket oluşturulacak controller katmanları buraya eklencek, restapiler ve methodlar. AuthController, ManagerController ilk olarak.
+    2- store paketi içine slice oluşturulacak, authSlice.js, managerSlice.js (2 tane index.js de oluşturulacak ortak bu)
+    3- Role göre login yapar vs. ekleme yap. (javada token ile birlikte role de dönmeli.)
+    4- Managerservice javada addEmployee eklenecek bura ile entegre edilecek.
+    4- Anasayfa tasarımı ve butonlara tıklama navigate
+    5- Manager sayfası menü mesela hesapOnayla, managerEkle vs.
+
+
+
+
+
 # BOOTSTRAP ekledik;
 
 ```bash
