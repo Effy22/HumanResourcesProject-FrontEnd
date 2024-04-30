@@ -1,5 +1,9 @@
-import { useRef, useEffect} from 'react';
-import '../Register/Register.css'
+import { useRef, useEffect, useState} from 'react';
+import '../Register/Register.css';
+import authController from '../../config/AuthController';
+import { useDispatch } from 'react-redux';
+import { fetchRegisterManager } from '../../store/feautures/authSlice';
+
 
 
 
@@ -8,6 +12,43 @@ function Register(){
     const sign_in_btn = useRef(null);
     const sign_up_btn = useRef(null);
     const container = useRef(null);
+
+    const [name,setName] = useState('');
+    const [surname,setSurname] = useState('');
+    const [email,setEmail] = useState('');
+    const [phone,setPhone] = useState('');
+    const [address,setAddress] = useState('');
+    const [company,setCompany] = useState('');
+    const [taxNo,setTaxNo] = useState('');
+
+    const dispatch = useDispatch();
+
+
+
+    const register = () =>{
+        fetch(authController.registerManager,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'name' : name,
+                'surname' : surname,
+                'email' : email,
+                'phone': phone,
+                'address': address,
+                'company' : company,
+                'taxNo' : taxNo 
+            })
+        }).then(data=> data.json())
+        .then(data=>{
+            console.log(data);
+        })
+    } 
+
+    useEffect(() => {
+        dispatch(fetchRegisterManager()); //token göndereceğiz.
+     }, []);
 
     useEffect(() => {
         const signInBtn = sign_in_btn.current;
@@ -49,38 +90,46 @@ function Register(){
 
 					<div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Employee Name" />
+						<input onChange={(evt) =>{
+                            setName(evt.target.value);
+                        }} type="text" placeholder="Employee Name" />
 					</div>
 
 					<div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Employee Surname" />
+						<input  onChange={(evt) =>{
+                            setSurname(evt.target.value); }} type="text" placeholder="Employee Surname" />
 					</div>
-
                     <div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Phone" />
+						<input onChange={(evt) =>{
+                            setEmail(evt.target.value); }} type="email" placeholder="EMail" />
 					</div> 
 
                     <div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Address" />
+						<input onChange={(evt) =>{
+                            setPhone(evt.target.value); }} type="text" placeholder="Phone Number" />
 					</div> 
 
                     <div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="ID Number" />
+						<input onChange={(evt) =>{
+                            setAddress(evt.target.value); }} type="text" placeholder="Address" />
 					</div> 
+                    
                     <div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Occupation" />
+						<input onChange={(evt) =>{
+                            setCompany(evt.target.value); }} type="text" placeholder="Company Name" />
 					</div>
                     <div className="input-field">
 						<i className="fas fa-user"></i>
-						<input type="text" placeholder="Department" />
+						<input onChange={(evt) =>{
+                            setTaxNo(evt.target.value); }} type="text" placeholder="Tax Number" />
 					</div>
 
-					<input type="submit" value="Add" className="btn solid" />
+					<input onClick={register} type="submit" value="Get an Offer" className="btn solid" />
 					
 				</form>
 				
