@@ -8,7 +8,7 @@ import AdminPanel from './pages/Admin/AdminPanel';
 
 function App() {
 
-  const isLogin = useSelector(state => state.personel.isLogin);
+ 
 
   return (
     <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
          <Route path='/' element={<Home />}/>
          <Route path='/register' element={<Register />}/>
          <Route path='/login' element={<Login />}/>
-         <Route path='/admin-panel' element={isLogin ? <AdminPanel />: <Login/>}/>
+         <Route path='/admin-panel' element={ <AdminPanel />}/>
     </Routes>
     </BrowserRouter>
   );
