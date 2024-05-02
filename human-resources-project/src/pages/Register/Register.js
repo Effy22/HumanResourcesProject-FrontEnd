@@ -27,6 +27,7 @@ function Register(){
         console.log("işlem.. ",authController.registerManager);
 
         fetch(authController.registerManager,{
+            
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

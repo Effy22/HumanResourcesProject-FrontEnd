@@ -18,8 +18,15 @@ function Login(){
 	const [password, setPassword] = useState("");
 
 	const login = () => {
-		dispatch(fetchLogin ({email, password})). then(() => {
-			navigate.call(null, '/admin-panel');
+		dispatch(fetchLogin({ email, password })).then((response) => {
+			console.log(response); // Yanıtı konsola yazdır
+			if (response.payload && response.payload.data && response.payload.data.token) {
+				const token = response.payload.data.token;
+				localStorage.setItem('jwtToken', token);
+				// Diğer işlemler...
+			} else {
+				console.error('Yanıtta token bulunamadı.');
+			}
 		});
 	} 
 

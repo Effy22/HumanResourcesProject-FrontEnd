@@ -19,7 +19,7 @@ export const fetchRegisterManager = createAsyncThunk(
         try{
             const result = await fetch(authController.registerManager,{
             method: 'POST',
-            mode: 'cors',
+           
             headers: {
                 'Content-Type': 'application/json' 
             },
@@ -61,7 +61,7 @@ export const fetchLogin =createAsyncThunk(
 const authSlice = createSlice({
     name: 'auth',
     initialState: initAuthState,
-    reducers: {},
+    reducers: { },
     extraReducers: (builder) =>{
         builder.addCase(fetchRegisterManager.pending,(state)=>{
             state.isLoadingFetchRegister = true;

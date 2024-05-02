@@ -3,9 +3,11 @@ import Home from './pages/Home/Home';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/LoginPage';
 import AdminPanel from './pages/Admin/AdminPanel'; 
+import { useSelector } from 'react-redux';
 
 
 function App() {
+  const isLogin  = useSelector(state => state.auth.isLogin);
 
   return (
     <BrowserRouter>
@@ -13,7 +15,7 @@ function App() {
          <Route path='/' element={<Home />}/>
          <Route path='/register' element={<Register />}/>
          <Route path='/login' element={<Login />}/>
-         <Route path='/admin-panel' element={ <AdminPanel />}/>
+         <Route path='/admin-panel' element={isLogin ? <AdminPanel /> : <Login />} />  
     </Routes>
     </BrowserRouter>
   );
