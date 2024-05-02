@@ -2,7 +2,6 @@ import authUrl from "../../config/AuthController";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
-
 const initAuthState = {
     authList: [],
     token: '',
@@ -16,6 +15,7 @@ export const fetchRegisterManager = createAsyncThunk(
     async(payload) => {
         const result = await fetch(authUrl.registerManager,{
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json' 
             },

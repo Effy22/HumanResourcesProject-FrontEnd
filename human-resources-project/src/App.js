@@ -8,8 +8,6 @@ import AdminPanel from './pages/Admin/AdminPanel';
 
 function App() {
 
- 
-
   return (
     <BrowserRouter>
     <Routes>

@@ -1,7 +1,7 @@
 import restApi from './RestApis';
 
 const managerUrl = {
-    save: restApi.managerUrl + '/save'
+    saveManager: restApi.managerUrl + '/save-manager'
 }
 
 export default managerUrl;
