@@ -1,5 +1,4 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { useSelector } from "react-redux";
 import Home from './pages/Home/Home';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/LoginPage';
@@ -7,8 +6,6 @@ import AdminPanel from './pages/Admin/AdminPanel';
 
 
 function App() {
-
- 
 
   return (
     <BrowserRouter>

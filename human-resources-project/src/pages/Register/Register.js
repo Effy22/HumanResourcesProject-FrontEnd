@@ -1,8 +1,7 @@
-import { useRef, useEffect, useState} from 'react';
-import '../Register/Register.css';
+import React, { useRef, useEffect, useState} from 'react';
+import './Register.css';
 import authController from '../../config/AuthController';
-import { useDispatch } from 'react-redux';
-import { fetchRegisterManager } from '../../store/feautures/authSlice';
+
 
 
 
@@ -21,11 +20,12 @@ function Register(){
     const [company,setCompany] = useState('');
     const [taxNo,setTaxNo] = useState('');
 
-    const dispatch = useDispatch();
-
 
 
     const register = () =>{
+        alert("Register çalıştı.")
+        console.log("işlem.. ",authController.registerManager);
+
         fetch(authController.registerManager,{
             method: 'POST',
             headers: {
@@ -44,11 +44,12 @@ function Register(){
         .then(data=>{
             console.log(data);
         })
+        .catch(error => {
+            console.error('Hata:', error);
+        });
     } 
 
-    useEffect(() => {
-        dispatch(fetchRegisterManager()); //token göndereceğiz.
-     }, []);
+
 
     useEffect(() => {
         const signInBtn = sign_in_btn.current;
@@ -80,66 +81,63 @@ function Register(){
     
     return(
        <>
+            <div className="container">
+                <div className="forms-container">
+                    <div className="signin-signup">
+                        <form action="#" className="sign-in-form">
 
-	<div className="container">
-		<div className="forms-container">
-			<div className="signin-signup">
-				<form action="#" className="sign-in-form">
+                            <h2 className="title">Register</h2>
 
-					<h2 className="title">Add an Employee</h2>
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setName(evt.target.value);
+                                }} type="text" placeholder="Name" />
+                            </div>
 
-					<div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setName(evt.target.value);
-                        }} type="text" placeholder="Employee Name" />
-					</div>
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input  onChange={(evt) =>{
+                                    setSurname(evt.target.value); }} type="text" placeholder="Surname" />
+                            </div>
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setEmail(evt.target.value); }} type="email" placeholder="E-Mail" />
+                            </div> 
 
-					<div className="input-field">
-						<i className="fas fa-user"></i>
-						<input  onChange={(evt) =>{
-                            setSurname(evt.target.value); }} type="text" placeholder="Employee Surname" />
-					</div>
-                    <div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setEmail(evt.target.value); }} type="email" placeholder="EMail" />
-					</div> 
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setPhone(evt.target.value); }} type="text" placeholder="Phone Number" />
+                            </div> 
 
-                    <div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setPhone(evt.target.value); }} type="text" placeholder="Phone Number" />
-					</div> 
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setAddress(evt.target.value); }} type="text" placeholder="Address" />
+                            </div> 
+                            
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setCompany(evt.target.value); }} type="text" placeholder="Company Name" />
+                            </div>
+                            <div className="input-field">
+                                <i className="fas fa-user"></i>
+                                <input onChange={(evt) =>{
+                                    setTaxNo(evt.target.value); }} type="text" placeholder="Tax Number" />
+                            </div>
 
-                    <div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setAddress(evt.target.value); }} type="text" placeholder="Address" />
-					</div> 
-                    
-                    <div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setCompany(evt.target.value); }} type="text" placeholder="Company Name" />
-					</div>
-                    <div className="input-field">
-						<i className="fas fa-user"></i>
-						<input onChange={(evt) =>{
-                            setTaxNo(evt.target.value); }} type="text" placeholder="Tax Number" />
-					</div>
+                            <input onClick={register} type="button" value="Get an Offer" className="btn solid" />
+                            
+                        </form>
+                        
+                    </div>
+                </div>
 
-					<input onClick={register} type="submit" value="Get an Offer" className="btn solid" />
-					
-				</form>
-				
-			</div>
-		</div>
-
-	
-	</div>
-
-
+            
+            </div>
        </>
     )
 }

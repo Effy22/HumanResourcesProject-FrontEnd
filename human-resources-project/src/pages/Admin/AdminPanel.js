@@ -2,7 +2,12 @@
 
 function AdminPanel(){
     return(
-       <h1></h1>
+       <>
+         <div>
+            <h1> Admin Page </h1>
+         </div>
+       
+       </>
     )
 }
 
