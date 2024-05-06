@@ -1,0 +1,147 @@
+:root {
+  --maviton4: #1a1e75;
+ --maviton3: #2e48a7;
+ --maviton2: #476fc2;
+ --maviton1: #6e97da;
+ --beyaz:  #e5edf6;
+}
+.navbar-logo {
+  max-width: 50px;
+  padding-left: 10px;
+  margin-right: 2px;
+  margin-top: 6px;
+}
+.custom-navbar {
+  padding-left: 20px;
+  justify-content: center;
+  background-color:  rgba(255, 255, 255, 0.652);
+  border-bottom: 0.2px solid var(--maviton2);
+  position: sticky;
+  top: 0; 
+  z-index: 1000;
+}
+
+.navbar-brand {
+  margin-right: 0; 
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: center;
+  height: 100%; 
+  margin-left: 10px;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+.navlink {
+  color: var(--maviton3);
+  font-weight: medium;
+  margin-left: 20px;
+  transition: color 0.7s ease;
+  font-size: 19px;
+  margin-bottom: 10px;
+  
+}
+.navlink:hover{
+  color: var(--maviton1);
+}
+.navbar-links a {
+  margin-right: 50px; 
+  text-decoration: none;
+}
+
+.navlink.active {
+  color: var(--maviton2);
+}
+.custom-footer {
+  background-color: var(--maviton4);
+  height: 300px;
+  padding: 20px 0;
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;  
+  border-top: 2px solid #ccc;
+}
+
+.footer {
+  display: flex; 
+  flex-wrap: wrap; 
+  margin-left: 3;
+  padding-right: 3;
+}
+.footer-links {
+  width: 100%; 
+  text-align: right; 
+}
+.footer-link {
+  color: var(--maviton1);
+  text-decoration: none;
+  margin-left: 80px;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--beyaz);
+}
+
+.footer-logo {
+  width: 50px; 
+  height: auto;
+  padding-bottom: 2%;
+  margin-bottom: 5%;
+}
+.footer-logo-container{
+  position: absolute;
+ 
+}
+.line {
+  width: 100%; 
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0; 
+}
+.footer-title {
+  font-size: 0.9rem;
+  color: var(--beyaz);
+  margin-bottom: 0;
+  text-align: center; 
+}
+
+.social-icons {
+  padding: 3%;
+  margin-right: 3%;
+  display: flex;
+  gap: 20px; /* İkonlar arasındaki boşluğu ayarlar */
+  justify-content: center;
+  color: var(--beyaz);
+}
+.icon{
+  font-size: 30px;
+}
+
+img {
+  width: 200px;
+}
+
+.card-img-container{
+  height: 200px;
+}
+.custom-button{
+  background-color: #1a1e75;
+  color:var(--maviton4);
+}
+button {
+  background-color: var(--maviton4);
+  color: white;
+}
+.btn{
+  background-color: #1a1e75;
+}
+button:hover{
+  background-color: #476fc2;
+}
+.custom-button:hover {
+  background-color: var(--maviton1); /* Hover durumunda arkaplan rengini değiştir */
+  color: var(--maviton4);
+}
