@@ -3,9 +3,6 @@ import './Register.css';
 import authController from '../../config/AuthController';
 
 
-
-
-
 function Register(){
 
     const sign_in_btn = useRef(null);
