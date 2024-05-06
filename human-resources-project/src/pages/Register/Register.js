@@ -15,7 +15,7 @@ function Register(){
     const [phone,setPhone] = useState('');
     const [address,setAddress] = useState('');
     const [company,setCompany] = useState('');
-    const [taxNo,setTaxNo] = useState('');
+    const [taxNumber,setTaxNumber] = useState('');
 
 
 
@@ -36,7 +36,7 @@ function Register(){
                 'phone': phone,
                 'address': address,
                 'company' : company,
-                'taxNo' : taxNo 
+                'taxNumber' : taxNumber 
             })
         }).then(data=> data.json())
         .then(data=>{
@@ -120,7 +120,7 @@ function Register(){
                             <div className="input-field">
                                 <i className="fas fa-user"></i>
                                 <input onChange={(evt) =>{
-                                    setTaxNo(evt.target.value); }} type="text" placeholder="Tax Number" />
+                                    setTaxNumber(evt.target.value); }} type="text" placeholder="Tax Number" />
                             </div>
 
                             <input onClick={register} type="button" value="Get an Offer" className="btn solid" />
