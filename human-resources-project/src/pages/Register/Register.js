@@ -46,9 +46,6 @@ function Register(){
             console.error('Hata:', error);
         });
     } 
-
-
-
     useEffect(() => {
         const signInBtn = sign_in_btn.current;
         const signUpBtn = sign_up_btn.current;
@@ -63,7 +60,6 @@ function Register(){
                 containerRef.classList.add("sign-up-mode");
             });
         }
-
         return () => {
             if (signInBtn && signUpBtn) {
                 signInBtn.removeEventListener("click", () => {

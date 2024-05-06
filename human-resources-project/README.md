@@ -33,3 +33,10 @@ sonra;
 ```bash
     npm install react-redux
 ```
+
+# Anasayfa düzeltilecek yerler;
+
+- Okların yeri, navbar beyaz olcak
+- Features bileşenin 4.'yü en alta alcaz.
+- register ve login kısımlarının bazı yazıları gözükmüyo bakcaz.
+- buttonların hepsini aynı yapcaz. 
