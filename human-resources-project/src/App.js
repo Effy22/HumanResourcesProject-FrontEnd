@@ -4,6 +4,7 @@ import Register from './pages/Register/Register';
 import Login from './pages/Login/LoginPage';
 import AdminPanel from './pages/Admin/AdminPanel'; 
 import { useSelector } from 'react-redux';
+import Company from './pages/Company/Company';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
          <Route path='/register' element={<Register />}/>
          <Route path='/login' element={<Login />}/>
          <Route path='/admin-panel' element={isLogin ? <AdminPanel /> : <Login />} />  
+         <Route path='/company' element={<Company />} />
     </Routes>
     </BrowserRouter>
   );
