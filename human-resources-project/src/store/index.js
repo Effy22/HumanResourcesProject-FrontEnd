@@ -1,13 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
     authSlice,
-    managerSlice
+    managerSlice,
+    companySlice
+
 } from './feautures';
 
 const store = configureStore({
     reducer: {
         auth: authSlice,
-        manager: managerSlice
+        manager: managerSlice,
+        company: companySlice
     }
 });
 
