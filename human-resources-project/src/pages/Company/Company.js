@@ -5,8 +5,9 @@ import Header from '../../components/molecules/Company/Header';
 import CompanyList from '../../components/organisms/Company/CompanyList';
 import CompanyApplingList from '../../components/organisms/Company/CompanyApplingList';
 import MenuList from '../../components/molecules/Company/MenuList';
-import {  fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
+import {fetchUpdateCompany, fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
 import './Company.css';
+import UpdateCompany from "../../components/organisms/Company/UpdateCompany";
 
 // Company bileşeni
 function Company() {
@@ -18,6 +19,7 @@ function Company() {
     useEffect(() => {
         dispatch(fetchViewCompanies());
         dispatch(fetchViewCompaniesAppling());
+        dispatch(fetchUpdateCompany());
     }, [dispatch]);
 
     // Menü öğesine tıklandığında tetiklenecek fonksiyon
@@ -30,6 +32,9 @@ function Company() {
     };
     const handleViewCompaniesApplingClick = () => {
         setCompanyApplingList(dispatch(fetchViewCompaniesAppling()));
+    };
+    const handleUpdateCompanyClick = () => {
+        setCompanyList(dispatch(fetchViewCompaniesAppling()));
     };
 
     return (
@@ -48,6 +53,7 @@ function Company() {
                         {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                         {menuId === 0 && <CompanyList companyList={companyList} onMenuItemClick ={handleViewCompaniesClick} />}
                         {menuId === 1 && <CompanyApplingList companyApplingList={companyApplingList} onMenuItemClick={handleViewCompaniesApplingClick} />}
+                         {menuId === 2 && <UpdateCompany  onMenuItemClick={handleUpdateCompanyClick} />}
                     </div>
                 </div>
             </div> 

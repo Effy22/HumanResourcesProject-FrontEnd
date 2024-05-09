@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+
 import {useSelector} from "react-redux";
 
 
 function CompanyList (){
 
- 
   const companyList= useSelector(state => state.company.companyList);
  
-
-
   return (
     <>
       <div className="rowT">

@@ -18,4 +18,4 @@ function ApproveCompany (){
     )
 
 };
-export default ApproveCompany;*/
+export default ApproveCompany; */

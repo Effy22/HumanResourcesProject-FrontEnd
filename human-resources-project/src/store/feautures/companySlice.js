@@ -139,9 +139,18 @@ const companySlice = createSlice({
 
         build.addCase(fetchApproveCompany.pending, (state) => {state.isLoadingApproveCompany=true;});
         build.addCase(fetchApproveCompany.fulfilled, (state,action) => {
-            state.isLoadingApproveCompany=false;
-            console.log(action.payload);});
-        build.addCase(fetchApproveCompany.rejected, (state) => {state.isLoadingApproveCompany=false;});
+             state.isLoadingApproveCompany=false;
+            if(action.payload.status===200){
+                //state.companyApplingList=action.payload.data; //bunu ekledim doğru mu?
+                //state.companyList=action.payload.data; // ve bu doğru mu? listelerde approve olunca güncellensin istedim.
+            }
+    
+        
+        });
+            
+        build.addCase(fetchApproveCompany.rejected, (state) => {
+            console.log("reject");
+            state.isLoadingApproveCompany=false;});
 
         build.addCase(fetchRejectCompany.pending, (state) => {state.isLoadingRejectCompany=true;});
         build.addCase(fetchRejectCompany.fulfilled, (state,action) => {

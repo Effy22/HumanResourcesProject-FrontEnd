@@ -1,18 +1,21 @@
-import React, { useState } from "react";
 import { useSelector} from "react-redux";
-import ApproveCompany from "./ApproveCompany";
+import { useDispatch} from 'react-redux';
+import { fetchApproveCompany, fetchRejectCompany } from '../../../store/feautures/companySlice'
 
 
 function CompanyApplingList (){
+  const dispatch=useDispatch();
   const companyApplingList= useSelector(state => state.company.companyApplingList);
 
   const handleApprove = (companyId) => {
-    <ApproveCompany />
+    // Şirketi onaylamak için backend'e istek yapma
+    dispatch(fetchApproveCompany(companyId)); // Şirketi onaylamak için companyId'yi parametre olarak geçiyoruz
     console.log("Şirket onaylandı:", companyId);
   };
-
+  
   const handleReject = (companyId) => {
-    // Reddetme işlemlerini gerçekleştirmek için companyId'yi kullanabilirsiniz
+    // Şirketi reddetmek için backend'e istek yapma
+    dispatch(fetchRejectCompany(companyId)); // Şirketi reddetmek için companyId'yi parametre olarak geçiyoruz
     console.log("Şirket reddedildi:", companyId);
   };
 
@@ -38,7 +41,7 @@ function CompanyApplingList (){
                         <td>{company.name}</td>
                         <td>{company.taxNumber}</td>
                         <td>{company.status}</td>
-                        <td> {/* Yeni sütun hücresi */}
+                        <td> 
                           <button onClick={() => handleApprove(company.id)}>Approve</button>
                           <button onClick={() => handleReject(company.id)}>Reject</button>
                         </td>
