@@ -164,6 +164,14 @@ form.sign-in-form {
   font-weight: 600;
   font-size: 0.8rem;
 }
-button:hover{
-  background-color: #476fc2;
+
+.custom-button {
+  color: white;
+  background-color: var(--maviton4);
+  transition: background-color 0.3s ease; /* Geçiş efekti */
+}
+
+.custom-button:hover {
+  background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
+  color: var(--maviton4);
 }

@@ -9,7 +9,6 @@ const initAuthState = {
     isLogin: false,
     isLoadingFetchRegister : false,
     isLoadingFetchLogin: false
-    
 
 }
 

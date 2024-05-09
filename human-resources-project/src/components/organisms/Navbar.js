@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.png';
 
 const NavbarComponent = () => {
- 
-
+  
   return (
     <Navbar className='custom-navbar' variant="dark">
       <Container>
-      
         <Navbar.Collapse id="responsive-navbar-nav" >
         <img src={logo} alt="Logo" className="navbar-logo" />
           <Nav className="navbar-links">

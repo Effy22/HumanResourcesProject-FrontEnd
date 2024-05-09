@@ -90,9 +90,6 @@ form.sign-in-form:hover {
   transition: 0.5s;
 }
 
-.btn:hover {
-  background-color: #8e00fb;
-}
 .panels-container {
   position: absolute;
   height: 100%;
@@ -111,6 +108,16 @@ form.sign-in-form:hover {
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
+}
+.custom-button {
+  color: white;
+  background-color: var(--maviton4);
+  transition: background-color 0.3s ease; /* Geçiş efekti */
+}
+
+.custom-button:hover {
+  background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
+  color: var(--maviton4);
 }
 
 

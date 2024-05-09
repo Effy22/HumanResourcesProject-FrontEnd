@@ -14,7 +14,7 @@
 .custom-navbar {
   padding-left: 20px;
   justify-content: center;
-  background-color:  rgba(255, 255, 255, 0.652);
+  background-color:  rgb(255, 255, 255);
   border-bottom: 0.2px solid var(--maviton2);
   position: sticky;
   top: 0; 
@@ -127,21 +127,14 @@ img {
 .card-img-container{
   height: 200px;
 }
-.custom-button{
-  background-color: #1a1e75;
-  color:var(--maviton4);
-}
-button {
-  background-color: var(--maviton4);
+
+.custom-button {
   color: white;
+  background-color: var(--maviton4);
+  transition: background-color 0.3s ease; /* Geçiş efekti */
 }
-.btn{
-  background-color: #1a1e75;
-}
-button:hover{
-  background-color: #476fc2;
-}
+
 .custom-button:hover {
-  background-color: var(--maviton1); /* Hover durumunda arkaplan rengini değiştir */
+  background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
   color: var(--maviton4);
 }
