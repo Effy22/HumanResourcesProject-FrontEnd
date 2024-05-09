@@ -5,13 +5,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   height: 40px;
   width: 100%;
   z-index: 100;
   left: 0;
-  
+}
+
+.rowC{
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+  align-items: flex-start; 
+  gap: 20px; 
+}
+
+.rowT{
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+  margin-top: 15%;
 }
 
 .logo-container {
@@ -41,10 +55,9 @@
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  border: 1px solid blue;
   margin-right: 40px;
 }
 
@@ -60,7 +73,7 @@
   background-color: #f0f0f0;
   padding: 20px;
   border: 1px solid #ddd;
-  position: fixed;
+  position: absolute;
   top: 80px;
   left: 0;
   height: 100vh;
@@ -80,14 +93,43 @@
 }
 
 .menu-list li:hover {
-  background-color: #ccc;
+  background-color: #dadbe0;
 }
 
 .menu-list a {
   text-decoration: none;
-  color: #333;
+  color: #2e48a7;
 }
 
 .menu-list a:hover {
-  color: #666;
+  color: #546191;
+}
+
+.company-table {
+  border-collapse: collapse;
+  width: 100%;
+ 
+}
+
+.company-table th,
+.company-table td {
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: left;
+  
+}
+
+.company-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  width: 50%;
+}
+
+
+.company-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.company-table td:last-child {
+  text-align: right;
 }
