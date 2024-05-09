@@ -65,9 +65,9 @@ const leaveEmployeeSlice = createSlice({
         build.addCase(fetchRequestLeave.pending, (state) => {state.isLoadingLeaveRequest=true});
         build.addCase(fetchRequestLeave.fulfilled,(state,action)=>{
             state.isLoadingLeaveRequest=false;
-            if(action.payload.data){
+      
                 alert("İzin Başarı ile oluşturuldu.");
-            }
+            
         });
         build.addCase(fetchRequestLeave.rejected,(state)=>{state.isLoadingLeaveRequest=false;});
 
@@ -75,8 +75,7 @@ const leaveEmployeeSlice = createSlice({
         build.addCase(fetchFindAllMyLeaves.pending, (state) => {state.isLoadingAllLeaveList=true;});
         build.addCase(fetchFindAllMyLeaves.fulfilled, (state,action) => {
             state.isLoadingAllLeaveList=false;
-            if(action.payload.status===200){
-            state.allLeaveList = action.payload.data;}}
+            state.allLeaveList = action.payload.data;}
         );
         build.addCase(fetchFindAllMyLeaves.rejected, (state) => {state.isLoadingAllLeaveList=false;});
     }

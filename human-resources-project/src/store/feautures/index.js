@@ -7,7 +7,7 @@ import leaveEmployeeSlice from './leaveEmployeeSlice';
 export {
     authSlice,
     managerSlice,
-    companySlice
+    companySlice,
     leaveManagerSlice,
     leaveEmployeeSlice
 };

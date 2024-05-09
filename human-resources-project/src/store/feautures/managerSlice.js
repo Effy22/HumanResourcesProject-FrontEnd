@@ -60,13 +60,11 @@ const managerSlice = createSlice({
         });
         build.addCase(fetchSaveManager.fulfilled, (state,action)=>{
             state.isLoadingFetchSaveManager = false;
-            if(action.payload.status ===null || action.payload.status!==200){
-                alert('hata...: ' + action.payload.message);
-            }else{
+           
                 console.log("gelen data...: ", action.payload);
                 state.data = action.payload.data;
                 state.isSaveManager= true;
-            }
+        
         });
         build.addCase(fetchSaveManager.rejected,(state)=>{
             state.isLoadingFetchSaveManager=false;
@@ -78,13 +76,11 @@ const managerSlice = createSlice({
         });
         build.addCase(fetchAddEmployee.fulfilled, (state,action)=>{
             state.isLoadingAddEmployee = false;
-            if(action.payload.status ===null || action.payload.status!==200){
-                alert('hata...: ' + action.payload.message);
-            }else{
+          
                 console.log("gelen data...: ", action.payload);
-                state.data = action.payload.data;
+
                 state.isAddEmployee= true;
-            }
+            
         });
         build.addCase(fetchAddEmployee.rejected,(state)=>{
             state.isLoadingAddEmployee=false;

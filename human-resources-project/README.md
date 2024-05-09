@@ -40,3 +40,12 @@ sonra;
 - Features bileşenin 4.'yü en alta alcaz.
 - register ve login kısımlarının bazı yazıları gözükmüyo bakcaz.
 - buttonların hepsini aynı yapcaz. 
+
+
+# EG BS NOTLAR
+
+- css 'e haftasonu bakcaz, imputlar labellar daha geniş olcak yazı tipleri ve boyutlarına bakcaz
+- avatar koycaz, giren kişinin token bilgisini almak vs
+- company'de token yok. dto lara burcu token ekleyecek herşeyi onunla çözümlycez. benim de öyle metotlarım 
+- frontta elif  metotlarımı deneyip devam edicem fronta. manager eksiklikleri tamamlycam. parçalarına ekleme yapılcak
+
