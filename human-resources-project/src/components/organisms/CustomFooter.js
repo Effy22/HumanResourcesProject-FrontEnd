@@ -16,7 +16,7 @@ const CustomFooter = () => {
             <Link to="/" className="footer-link">HomePage</Link>
             <Link to="/login" className="footer-link">Login</Link>
             <Link to="/register" className="footer-link">Get An Offer</Link>
-            <Link to="/urun" className="footer-link">Product</Link>
+            <Link to="/about-us" className="footer-link">About Us</Link>
           </div>
         </div>
       

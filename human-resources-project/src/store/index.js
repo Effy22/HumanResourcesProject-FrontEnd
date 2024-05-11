@@ -1,16 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
     authSlice,
-    managerSlice,
-    companySlice
-
+    companySlice,
+    leaveEmployeeSlice,
+    leaveManagerSlice,
+    managerSlice
 } from './feautures';
 
 const store = configureStore({
     reducer: {
         auth: authSlice,
         manager: managerSlice,
-        company: companySlice
+        company: companySlice,
+        leaveManager: leaveManagerSlice,
+        leaveEmployee: leaveEmployeeSlice
     }
 });
 

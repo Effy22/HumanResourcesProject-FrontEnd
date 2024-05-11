@@ -28,10 +28,6 @@ body {
   max-height: 100%; 
 }
 
-.container{
-  max-width: 540px;
-  width: 100%;
-}
 .feature-p{
   display: block;
   font-weight: 300;
@@ -157,8 +153,14 @@ title{
 .next-btn {
   right: 0; /* Sağ kenara yerleştir */
 }
+.custom-button {
+  color: white;
+  background-color: var(--maviton4);
+  transition: background-color 0.3s ease; /* Geçiş efekti */
+}
+
 .custom-button:hover {
-  background-color: var(--maviton1); /* Hover durumunda arkaplan rengini değiştir */
+  background-color: var(--maviton1); /* Hover durumunda arkaplan rengi değişecek */
   color: var(--maviton4);
 }
 

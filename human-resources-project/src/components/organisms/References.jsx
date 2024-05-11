@@ -5,46 +5,36 @@ const References = ({ logos }) => {
   const [doubledLogos, setDoubledLogos] = useState([]);
 
   useEffect(() => {
-    // Logoların iki kopyasını oluştur
-    setDoubledLogos([...logos, ...logos,]);
+    // Logoların döngüsel olarak kaymasını sağlamak için logoların iki kopyasını oluştur
+    setDoubledLogos([...logos, ...logos, ...logos, ...logos,...logos, ...logos,...logos, ...logos]);
   }, [logos]);
 
   // Otomatik kaydırma işlemi
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === doubledLogos.length / 2 - 1 ? 0 : prevIndex + 1));
-    }, 6000); // 2 saniyede bir kaydır
+      setCurrentIndex((prevIndex) => (prevIndex === 0 ? doubledLogos.length - 1 : prevIndex - 1));
+    }, 1000); // 8 saniyede bir kaydır
 
     return () => clearInterval(interval); 
   }, [doubledLogos]);
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === doubledLogos.length / 2 - 1 ? 0 : prevIndex + 1));
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? doubledLogos.length / 2 - 1 : prevIndex - 1));
-  };
-
   return (
     <>
-    <div className='container-title text-center'>
-      <h1>References</h1>  
-    </div>
-    
-      <div className="references-container text-center">
-      <div className="references-list" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-        {doubledLogos.map((logo, index) => (
-          <div
-            key={index}
-            className="reference-item"
-            style={{ backgroundImage: `url(${logo})` }}
-          ></div>
-        ))}
+      <div className='container-title text-center'>
+        <h1>References</h1>  
       </div>
-      <button className="prev-btn" onClick={handlePrev}>{'<'}</button>
-      <button className="next-btn" onClick={handleNext}>{'>'}</button>
-    </div>
+      
+      <div className="references-container text-center">
+        <div className="references-list" style={{ transform: `translateX(${currentIndex * (100 / doubledLogos.length)}%)` }}>
+          {doubledLogos.map((logo, index) => (
+            <div
+              key={index}
+              className="reference-item"
+              style={{ backgroundImage: `url(${logo})` }}
+            ></div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };

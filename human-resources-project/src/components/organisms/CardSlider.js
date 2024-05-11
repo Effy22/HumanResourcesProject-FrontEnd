@@ -53,7 +53,7 @@ const CardSlider = () => {
               <Card.Body className='card-body'>
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>{card.text}</Card.Text>
-                <Button style={{color:'white', backgroundColor: '#1a1e75'}} className='custom-button' variant="primary">More...</Button>
+                <Button className='custom-button' variant="primary">More...</Button>
               </Card.Body>
             </Card>
           ))}

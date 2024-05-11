@@ -8,9 +8,8 @@ const initAuthState = {
     data: {},
     isLogin: false,
     isLoadingFetchRegister : false,
-    isLoadingFetchLogin: false
-    
-
+    isLoadingFetchLogin: false,
+    role: '', 
 }
 
 export const fetchRegisterManager = createAsyncThunk(
@@ -78,14 +77,13 @@ const authSlice = createSlice({
         builder.addCase(fetchLogin.pending,(state) => { state.isLoadingFetchLogin =true;}); 
         builder.addCase(fetchLogin.fulfilled,(state,action) => {
             state.isLoadingFetchLogin =false;
-           /* if(action.payload.status===null || action.payload.status!==200){
-                alert('hata....: '+ action.payload.message);
-            }else{
-                console.log("gelen data...: ", action.payload);
-                state.data=action.payload.data; //statemdeki dataya payloaddaki datayı setliyoruz.
-                state.isLogin=true;
-                // sessionStorage.setItem("token", action.payload.data);
-            } */
+           
+            console.log("gelen data....: ", action.payload);               
+            state.data = action.payload.data;
+            state.isLogin = true;
+            state.role = action.payload.data.role;
+            console.log("Redux state after login:", state);
+
         }); //işlem tamamlandı
 
         builder.addCase(fetchLogin.rejected,(state) => {
