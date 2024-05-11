@@ -14,6 +14,7 @@
 .custom-navbar {
   padding-left: 20px;
   justify-content: center;
+  height: 120px;
   background-color:  rgb(255, 255, 255);
   border-bottom: 0.2px solid var(--maviton2);
   position: sticky;
@@ -28,7 +29,7 @@
 .navbar-links {
   display: flex;
   justify-content: center;
-  height: 100%; 
+  height: 70%; 
   margin-left: 10px;
   padding-left: 15px;
   margin-bottom: 20px;
@@ -137,4 +138,8 @@ img {
 .custom-button:hover {
   background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
   color: var(--maviton4);
+}
+#about-title, #about-text{
+  filter: none;
+  color: white;
 }

@@ -21,7 +21,6 @@ function home() {
     <References logos={logos}/>
     <Slider/>
     <Footer/>
-
     </>
     
   );

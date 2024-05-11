@@ -49,3 +49,6 @@ sonra;
 - company'de token yok. dto lara burcu token ekleyecek herşeyi onunla çözümlycez. benim de öyle metotlarım 
 - frontta elif  metotlarımı deneyip devam edicem fronta. manager eksiklikleri tamamlycam. parçalarına ekleme yapılcak
 
+- Token ile ilgili olarak ilk bakmam gereken metot: AddEmployee olcak
+
+

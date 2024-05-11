@@ -7,6 +7,9 @@ import { fetchGetAllPendingLeavesOfEmployees } from '../../store/feautures/leave
 import PendingLeaveList from '../../components/organisms/Manager/PendingLeaveList';
 import AddLeaveForEmployee from '../../components/organisms/Manager/AddLeaveForEmployee';
 import AddEmployee from '../../components/organisms/Manager/AddEmployee';
+import EmployeeList from '../../components/organisms/Manager/EmployeeList'
+
+
 
 
 const Manager = () => {
@@ -25,7 +28,17 @@ const Manager = () => {
   }, [dispatch]);
 
   const handleMenuItemClick = (id) => {
-    setMenuId(id); // State'i güncelle
+    if (id === 5) {
+      // Logout işlemi
+      localStorage.removeItem('jwtToken'); // JWT token'ı kaldır
+      window.location.href = '/'; // Ana sayfaya yönlendir
+    } else if (id === 2) {
+      // Company sayfasına git
+      window.location.href = '/company'; // Company sayfasına yönlendir
+    } else {
+      // Diğer menü öğeleri için
+      setMenuId(id); // State'i güncelle
+    }
   };
   const handleViewPendingLeavesClick = async () => {
     setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees()));
@@ -45,6 +58,7 @@ const Manager = () => {
                 </div>
                     {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                     {menuId === 0 && <AddEmployee />}
+                    {menuId === 1 && <EmployeeList />}
                     {menuId === 3 && <AddLeaveForEmployee/>}
                     {menuId === 4 && <PendingLeaveList pendingLeaveList={pendingLeaveList} onMenuItemClick ={handleViewPendingLeavesClick} />}
                    

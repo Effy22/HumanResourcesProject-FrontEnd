@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import imgback from '../../images/registerimage.jpg';
 
 const About = () => {
   const [h1Visible, setH1Visible] = useState(false);
@@ -34,10 +35,10 @@ const About = () => {
   }, []);
 
   return (
-    <div className='text-center about-container'>
+    <div className='text-center about-container' style={{backgroundImage: `url(${imgback})`, filter: 'brightness(50%) contrast(85%) saturate(60%) hue-rotate(370deg)'}}>
       <div className='row'>
-        <h1 id='about-title' className={h1Visible ? 'animate-on-scroll' : ''}>Welcome to Workforce Solution</h1>
-        <p id="about-text" className={pVisible ? 'animate-on-scroll' : ''}>
+        <h1 id='about-title' className={h1Visible ? 'animate-on-scroll' : ''} style={{ color: 'rgb(255, 255, 255)', filter: 'none' }}>Welcome to Workforce Solution</h1>
+        <p id="about-text" className={pVisible ? 'animate-on-scroll' : ''} style={{ color: 'rgb(255, 255, 255)', filter: 'none' }}>
           Workforce Solution is an advanced HR management application designed to streamline human resources processes for businesses of all sizes. Our platform offers a comprehensive suite of features including personnel management, performance evaluation, recruitment process management, customizable training and development programs, regular employee satisfaction surveys, and occupational health and safety compliance.
           With Workforce Solution, you can efficiently manage your company's human resources operations, track employee performance, foster professional growth, and ensure workplace safety. Our intuitive interface and powerful analytics empower you to make data-driven decisions and enhance the overall productivity and satisfaction of your workforce.
           Whether you're a small startup or a large enterprise, Workforce Solution provides the tools and insights you need to optimize your HR processes and elevate your organization to new heights.

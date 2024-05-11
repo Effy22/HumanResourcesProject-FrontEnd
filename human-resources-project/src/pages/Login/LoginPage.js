@@ -1,7 +1,8 @@
 import './Login.css'
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {fetchLogin} from '../../store/feautures/authSlice';
+import {useNavigate} from 'react-router-dom';
 
 
 function Login(){
@@ -10,18 +11,31 @@ function Login(){
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const login = () => {
-		dispatch(fetchLogin({ email, password })).then((response) => {
-			console.log(response); // Yanıtı konsola yazdır
-			if (response.payload && response.payload.data && response.payload.data.token) {
-				const token = response.payload.data.token;
-				localStorage.setItem('jwtToken', token);
-				// Diğer işlemler...
-			} else {
-				console.error('Yanıtta token bulunamadı.');
+	const isLogin = useSelector(state => state.auth.isLogin);
+	const userRole = useSelector(state => state.auth.role);
+	const navigate = useNavigate();
+
+  // Kullanıcı giriş yapmışsa ve rolüne göre yönlendirme yap
+  const login = () => {
+    dispatch(fetchLogin({ email, password })).then((response) => {
+        console.log(response); // Yanıtı konsola yazdır
+        if (response.payload && response.payload.data && response.payload.data.token) {
+            const token = response.payload.data.token;
+            localStorage.setItem('jwtToken', token);
+			const gelenRol = response.payload.data.role;
+            if (gelenRol === 'MANAGER') {
+                navigate('/manager');
+            } else if (gelenRol === 'EMPLOYEE') {
+                navigate('/register');
+            }else if (gelenRol === 'ADMIN'){
+				navigate('/company');
 			}
-		});
-	} 
+        } else {
+            console.error('Yanıtta token bulunamadı.');
+        }
+    });
+}
+
 
 
     return(

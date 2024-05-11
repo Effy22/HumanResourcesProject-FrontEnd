@@ -22,6 +22,7 @@ function AddEmployee() {
 
   const newToken = useSelector(state => state.auth.token);
 
+  //bu çalışmazsa const token = localStorage.getItem('jwtToken'); yapcaz. 
   const addEmployee = () => {
     setEmployee({
         ...employee,

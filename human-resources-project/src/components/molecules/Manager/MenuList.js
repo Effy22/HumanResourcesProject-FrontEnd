@@ -40,7 +40,7 @@ function MenuList({ onMenuItemClick }) {
 
       <div className="logout-container row container end">
         <FontAwesomeIcon icon={faArrowRightFromBracket} />
-        <a href="#">Logout</a>
+        <a href="/">Logout</a>
       </div>
     </>
   );
