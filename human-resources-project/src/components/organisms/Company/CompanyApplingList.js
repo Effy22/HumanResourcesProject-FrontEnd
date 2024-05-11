@@ -11,12 +11,14 @@ function CompanyApplingList (){
     // Şirketi onaylamak için backend'e istek yapma
     dispatch(fetchApproveCompany(companyId)); // Şirketi onaylamak için companyId'yi parametre olarak geçiyoruz
     console.log("Şirket onaylandı:", companyId);
+    alert("The company has been successfully approved!");
   };
   
   const handleReject = (companyId) => {
     // Şirketi reddetmek için backend'e istek yapma
     dispatch(fetchRejectCompany(companyId)); // Şirketi reddetmek için companyId'yi parametre olarak geçiyoruz
     console.log("Şirket reddedildi:", companyId);
+    alert("The company has been rejected!")
   };
 
     return(
@@ -25,8 +27,8 @@ function CompanyApplingList (){
             <table className="company-table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Manager Id</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Manager-ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Tax Number</th>
                     <th scope="col">Status</th>

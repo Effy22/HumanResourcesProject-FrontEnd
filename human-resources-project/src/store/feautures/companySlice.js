@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import companyUrl from "../../config/CompanyController";
+import authUrl from "../../config/AuthController";
 
 const initCompanyState = {
     companyList: [],
     companyApplingList: [],
+    updateList: [],
     isLoadingViewCompanies: false,
     isLoadingViewCompaniesAppling: false,
     isLoadingApproveCompany: false,
@@ -11,20 +13,69 @@ const initCompanyState = {
     isLoadingUpdateCompany: false,
     isLoadingCompanyCount: false,
     activeMenuId: 0,
-    data: {}
+    data: {},
+    token: null,
+    error: null
 }
+
+
+// Kullanıcı girişi işlemi
+export const loginUser = createAsyncThunk(
+    'company/loginUser',
+    async ({ email, password }, thunkAPI) => {
+        try {
+            const response = await fetch(authUrl.login, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Başarılı giriş durumunda token'ı sakla
+                thunkAPI.dispatch(setToken(data.token));
+            }
+            return data;
+        } catch (error) {
+            console.error('Login failed:', error);
+            throw error;
+        }
+    }
+);
+
+// Token'ı ayarla
+export const setToken = createSlice({
+    name: 'company',
+    initialState: initCompanyState,
+    reducers: {
+        updateToken(state, action) {
+            state.token = action.payload;
+        },
+        clearToken(state) {
+            state.token = null;
+        }
+    }
+});
 
 export const fetchViewCompanies =createAsyncThunk(
     'company/fetchViewCompanies',
-    async() => {
+    async(_, thunkAPI) => {
+        // Store'dan token'ı al
+        const {token}  = thunkAPI.getState().company;
+
         const result= await fetch(companyUrl.viewCompanies,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Token'ı Authorization header'ına ekle
             }
-        }).then(data => data.json())
-        .then(data => data);
-        return result;
+        });
+        const data = await result.json();
+        if (!result.ok) {
+            throw new Error(data.message || 'Failed to fetch list');
+        }
+        return data;
     });
 
 export const fetchViewCompaniesAppling =createAsyncThunk(
@@ -52,7 +103,7 @@ export const fetchViewCompaniesAppling =createAsyncThunk(
                 body: JSON.stringify(payload)
             }).then(data=>data.json())
             .then(data=>data);
-            return result;
+            return { companyId: payload, result };
             }catch (error){
                 console.log('ERROR: company/fetchApproveCompany...: ', error);
             }
@@ -83,7 +134,7 @@ export const fetchUpdateCompany = createAsyncThunk(
     async(payload) => {
         try{
             const result = await fetch(companyUrl.updateCompany,{
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json' 
             },
@@ -118,6 +169,7 @@ const companySlice = createSlice({
         setActiveMenuId(state,action) {
             state.activeMenuId=action.payload;
          }
+
     },
 
     extraReducers: (build) => {
@@ -139,7 +191,10 @@ const companySlice = createSlice({
 
         build.addCase(fetchApproveCompany.pending, (state) => {state.isLoadingApproveCompany=true;});
         build.addCase(fetchApproveCompany.fulfilled, (state,action) => {
+            const { companyId, result } = action.payload;
              state.isLoadingApproveCompany=false;
+             state.companyApplingList = state.companyApplingList.filter(company => company.id !== companyId);
+              state.companyList = [...state.companyList, result];
             if(action.payload.status===200){
                 //state.companyApplingList=action.payload.data; //bunu ekledim doğru mu?
                 //state.companyList=action.payload.data; // ve bu doğru mu? listelerde approve olunca güncellensin istedim.
@@ -154,14 +209,29 @@ const companySlice = createSlice({
 
         build.addCase(fetchRejectCompany.pending, (state) => {state.isLoadingRejectCompany=true;});
         build.addCase(fetchRejectCompany.fulfilled, (state,action) => {
+            const { companyId } = action.payload;
             state.isLoadingRejectCompany=false;
+            state.companyApplingList = state.companyApplingList.filter(company => company.id !== companyId);
             console.log(action.payload);});
         build.addCase(fetchRejectCompany.rejected, (state) => {state.isLoadingRejectCompany=false;});
 
         build.addCase(fetchUpdateCompany.pending, (state) => {state.isLoadingUpdateCompany=true;});
         build.addCase(fetchUpdateCompany.fulfilled, (state,action) => {
             state.isLoadingUpdateCompany=false;
-            console.log(action.payload);});
+            console.log(action.payload);
+            const updatedCompany = action.payload;
+
+             // Şirket bilgilerini güncelleme
+            state.companyList = state.companyList.map(company => {
+                if (company.id === updatedCompany.id) {
+                    return updatedCompany;
+                 }
+                 return company;
+             });
+             // Güncelleme listesini güncelleme
+        state.updateList = [...state.updateList, updatedCompany];
+        });
+            
         build.addCase(fetchUpdateCompany.rejected, (state) => {state.isLoadingUpdateCompany=false;});
 
         build.addCase(fetchCompanyCount.pending, (state) => {state.isLoadingCompanyCount=true;});
@@ -175,5 +245,6 @@ const companySlice = createSlice({
 
 
 export const {setActiveMenuId} = companySlice.actions;
+export const { updateToken, clearToken } = setToken.actions;
 export default companySlice.reducer;
 

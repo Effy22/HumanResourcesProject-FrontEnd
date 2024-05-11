@@ -1,12 +1,11 @@
 import  React, { useState, useSelector } from "react";
 import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
 import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
 
-
-function UpdateCompany() {
-  const dispatch = useDispatch();
-  const [company, setCompany] = useState({
+ /* const [company, setCompany] = useState({
+    id: "",
     managerId: "",
     name: "",
     title: "",
@@ -37,26 +36,63 @@ function UpdateCompany() {
         ...company
     });
     dispatch(fetchUpdateCompany(company));
-  };
+  }; */
 
 
-  
+  function UpdateCompany({ companyId, initialCompany, onUpdate, onClose }) {
+    const dispatch = useDispatch();
+    
+
+    const [updatedCompany, setUpdatedCompany] = useState(initialCompany || {});
+
+    useEffect(() => {
+        setUpdatedCompany({ ...initialCompany, id: companyId });
+    }, [initialCompany, companyId]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUpdatedCompany({ ...updatedCompany, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onUpdate(updatedCompany);
+        dispatch(fetchUpdateCompany(updatedCompany));
+    };
+
+    const update = () => {
+        dispatch(fetchUpdateCompany(updatedCompany));
+        onClose(); // Güncelleme işlemi tamamlandığında pencereyi kapat
+    };
+
+
+
 
   return (
-    <>
+    <>      
+
+    <h2>Update Company</h2>
+      <form onSubmit={handleSubmit}>
         <div className="column-addleave">
+        <div className="mb-3">
+                <label className="form-label" style={{ display: 'block' }}>ID</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Name"
+                    value={updatedCompany.id || ''}
+                    onChange={handleChange}
+                />
+            </div>
+    
             <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>Name</label>
                 <input
                     type="text"
                     className="form-control"
                     placeholder="Name"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            name: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.name || ''}
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -65,26 +101,22 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Tittle"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            title: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.title}
+                    onChange={handleChange}
                 />
             </div>
+
+
+
+
             <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>Description</label>
                 <input
                     type="text"
                     className="form-control"
                     placeholder="Identity Number"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            description: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.description}
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -93,12 +125,8 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Address"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            address: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.address}
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -107,12 +135,8 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Phone Number"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            phone: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.phone}
+                    onChange={handleChange}
                 />
             </div>
             
@@ -123,12 +147,8 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="E-Mail"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            email: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.email}
+                    onChange={handleChange}
                 />
             </div>
 
@@ -138,12 +158,8 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Web Site"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            website: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.website}
+                    onChange={handleChange}
                 />
             </div>
 
@@ -153,12 +169,8 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Logo"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            logo: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.logo}
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -167,209 +179,11 @@ function UpdateCompany() {
                     type="text"
                     className="form-control"
                     placeholder="Sector"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            sector: evt.target.value,
-                        });
-                    }}
+                    value={updatedCompany.sector}
+                    onChange={handleChange}
                 />
             </div>
-            
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Tax Number</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Tax Number"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            taxNumber: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Tax Office</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Tax Office"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            taxOffice: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Mersis Number</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Mersis Number"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            mersisNo: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Vision</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Vision"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            vision: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Mission</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Mission"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            mission: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Country</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Country"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            country: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>City</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="City"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            city: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Employee Count</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Employee Count"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            employeeCount: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Founded</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Founded"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            founded: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Founding Year</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Founding Year"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            foundingYear: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Linkedin</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Linkedin"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            linkedin: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-            
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Membership Plan</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Membership Plan"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            membershipPlan: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Status</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Status"
-                    onChange={(evt) => {
-                        setCompany({
-                            ...company,
-                            status: evt.target.value,
-                        });
-                    }}
-                />
-            </div>
+        
 
 
 
@@ -377,9 +191,11 @@ function UpdateCompany() {
                 <button onClick={update} type="button" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Update</button>
             </div>
         </div>
+
+        </form>
     </>
     
   );
 }
 
-export default React.memo(UpdateCompany);
+export default UpdateCompany;

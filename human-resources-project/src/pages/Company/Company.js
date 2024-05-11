@@ -8,6 +8,7 @@ import MenuList from '../../components/molecules/Company/MenuList';
 import {fetchUpdateCompany, fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
 import './Company.css';
 import UpdateCompany from "../../components/organisms/Company/UpdateCompany";
+import UpdateList from "../../components/organisms/Company/UpdateList";
 
 // Company bileşeni
 function Company() {
@@ -15,11 +16,12 @@ function Company() {
     const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
     const [companyList, setCompanyList] = useState([]);
     const [companyApplingList, setCompanyApplingList] = useState([]);
+    const [updateList, setUpdateList] =useState([]);
 
     useEffect(() => {
         dispatch(fetchViewCompanies());
         dispatch(fetchViewCompaniesAppling());
-        dispatch(fetchUpdateCompany());
+
     }, [dispatch]);
 
     // Menü öğesine tıklandığında tetiklenecek fonksiyon
@@ -33,10 +35,9 @@ function Company() {
     const handleViewCompaniesApplingClick = () => {
         setCompanyApplingList(dispatch(fetchViewCompaniesAppling()));
     };
-    const handleUpdateCompanyClick = () => {
-        setCompanyList(dispatch(fetchViewCompaniesAppling()));
+    const handleUpdateClick = () => {
+        setUpdateList(dispatch(fetchUpdateCompany()));
     };
-
     return (
         <>
             <div className="container">
@@ -53,7 +54,7 @@ function Company() {
                         {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                         {menuId === 0 && <CompanyList companyList={companyList} onMenuItemClick ={handleViewCompaniesClick} />}
                         {menuId === 1 && <CompanyApplingList companyApplingList={companyApplingList} onMenuItemClick={handleViewCompaniesApplingClick} />}
-                         {menuId === 2 && <UpdateCompany  onMenuItemClick={handleUpdateCompanyClick} />}
+                        {menuId === 2 && <UpdateList updateList={updateList} onMenuItemClick={handleUpdateClick} />}
                     </div>
                 </div>
             </div> 
