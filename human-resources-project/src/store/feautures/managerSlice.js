@@ -7,9 +7,8 @@ const managerInitialState = {
     token: '',
     data: {},
     isLoadingFetchSaveManager: false,
-    isLoadingAddEmployee: false,
     isSaveManager: false,
-    isAddEmployee: false,
+
 }
 
 export const fetchSaveManager = createAsyncThunk (
@@ -31,24 +30,7 @@ export const fetchSaveManager = createAsyncThunk (
     }
 );
 
-export const fetchAddEmployee = createAsyncThunk (
-    'manager/fetchAddEmployee',
-    async(payload) => {
-        try{
-         const result = await fetch(managerController.addEmployee, {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(payload)
-         }).then(data=>data.json())  
-         .then(data=>data);
-         return result; 
-        }catch(error){
-            console.log('ERROR: manager/fetchAddEmployee', error);
-        }   
-    }
-);
+
 const managerSlice = createSlice({
     name: 'manager',
     initialState: managerInitialState,
@@ -70,21 +52,7 @@ const managerSlice = createSlice({
             state.isLoadingFetchSaveManager=false;
         }); 
 
-        //add-employee
-        build.addCase(fetchAddEmployee.pending,(state)=>{
-            state.isLoadingAddEmployee =true;
-        });
-        build.addCase(fetchAddEmployee.fulfilled, (state,action)=>{
-            state.isLoadingAddEmployee = false;
-          
-                console.log("gelen data...: ", action.payload);
-
-                state.isAddEmployee= true;
-            
-        });
-        build.addCase(fetchAddEmployee.rejected,(state)=>{
-            state.isLoadingAddEmployee=false;
-        }); 
+    
     }
 });
 

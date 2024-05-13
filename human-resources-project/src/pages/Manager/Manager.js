@@ -10,21 +10,16 @@ import AddEmployee from '../../components/organisms/Manager/AddEmployee';
 import EmployeeList from '../../components/organisms/Manager/EmployeeList'
 
 
-
-
 const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
+  const [employeeList, setEmployeeList] = useState([]);
   
-
-  const token = localStorage.getItem('jwtToken');
-
-  // belki bu da denencek : const token = useSelector(state => state.auth.token);
   
   useEffect(() => {
-    dispatch(fetchGetAllPendingLeavesOfEmployees());
-    //başka fetchler buraya
+    const token = localStorage.getItem('jwtToken');
+    dispatch(fetchGetAllPendingLeavesOfEmployees(token)); 
   }, [dispatch]);
 
   const handleMenuItemClick = (id) => {
@@ -41,7 +36,8 @@ const Manager = () => {
     }
   };
   const handleViewPendingLeavesClick = async () => {
-    setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees()));
+    const token = localStorage.getItem('jwtToken');
+    setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees(token)));
   };
   
 

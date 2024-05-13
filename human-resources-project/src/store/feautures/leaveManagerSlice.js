@@ -90,22 +90,22 @@ export const fetchGetAllLeavesOfEmployee = createAsyncThunk(
     }
 );
 
+
 export const fetchGetAllPendingLeavesOfEmployees = createAsyncThunk(
     'leaveManager/fetchGetAllPendingLeavesOfEmployees',
-    async ()=>{
-        try{
-            const result = await fetch(leaveManagerUrl.getAllPendingLeavesOfEmployees,{
-            method:'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(data=>data.json())
-        .then(data=>data);
-        return result;
-        }catch(error){
+    async (token) => { // Tokeni işlevinize ekleyin
+        try {
+            const result = await fetch(`${leaveManagerUrl.getAllPendingLeavesOfEmployees}?token=${token}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+            .then(data => data);
+            return result;
+        } catch(error) {
             console.log('ERROR: leaveManager/fetchGetAllPendingLeavesOfEmployees', error);
-        } 
-       
+        }
     }
 );
 

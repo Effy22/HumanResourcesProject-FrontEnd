@@ -1,34 +1,34 @@
 import  React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAddEmployee } from "../../../store/feautures/managerSlice";
-/**
- * 
- * @returns Managerın tokenını burada nasıl karşılaştırcaz? 
- */
+import { fetchRegisterEmployee } from "../../../store/feautures/authSlice";
 
 function AddEmployee() {
   const dispatch = useDispatch();
   const [employee, setEmployee] = useState({
-    token: "",
-    name: "",
-    surname: "",
-    identityNumber: "",
-    phoneNumber: "",
-    address: "",
-    position: "",
-    department: "",
-    occupation: ""
+    token: '',
+    managerId: '',
+    name: '',
+    surname: '',
+    identityNumber: '',
+    phoneNumber: '',
+    address: '',
+    position: '',
+    department: '',
+    companyName: '',
+    jobStartDate: 0,
+    occupation: ''
   });
 
-  const newToken = useSelector(state => state.auth.token);
+  
 
-  //bu çalışmazsa const token = localStorage.getItem('jwtToken'); yapcaz. 
+  const takenToken = localStorage.getItem('jwtToken');
+
   const addEmployee = () => {
     setEmployee({
         ...employee,
-        token: newToken,
+        token: takenToken,
     });
-    dispatch(fetchAddEmployee(employee));
+    dispatch(fetchRegisterEmployee(employee));
   };
 
 
@@ -131,6 +131,34 @@ function AddEmployee() {
                         setEmployee({
                             ...employee,
                             department: evt.target.value,
+                        });
+                    }}
+                />
+            </div>
+            <div className="mb-3">
+                <label className="form-label" style={{ display: 'block' }}>Company Name</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Company Name"
+                    onChange={(evt) => {
+                        setEmployee({
+                            ...employee,
+                            companyName: evt.target.value,
+                        });
+                    }}
+                />
+            </div>
+            <div className="mb-3">
+                <label className="form-label" style={{ display: 'block' }}>Job Start Date</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Job Start Date"
+                    onChange={(evt) => {
+                        setEmployee({
+                            ...employee,
+                            jobStartDate: evt.target.value,
                         });
                     }}
                 />

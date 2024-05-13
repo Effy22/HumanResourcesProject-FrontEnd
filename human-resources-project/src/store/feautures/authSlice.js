@@ -7,7 +7,8 @@ const initAuthState = {
     token: '',
     data: {},
     isLogin: false,
-    isLoadingFetchRegister : false,
+    isLoadingFetchRegisterManager : false,
+    isLoadingFetchRegisterEmployee: false,
     isLoadingFetchLogin: false,
     role: '', 
 }
@@ -32,6 +33,23 @@ export const fetchRegisterManager = createAsyncThunk(
     }
 );
 
+
+export const fetchRegisterEmployee = createAsyncThunk(
+    'auth/fetchRegisterEmployee',
+    async(payload) => {
+        try{
+            const result = await fetch(authController.registerEmployee,{
+                method: 'POST',
+                headers:{'Content-Type' : 'application/json'},
+                body: JSON.stringify(payload)
+        }).then(data=>data.json())
+        .then(data=>data);
+        return result;
+        }catch (error){
+            console.log('ERROR: auth/fetchRegisterManager...: ', error);
+        }
+    }
+);
 
 export const fetchLogin =createAsyncThunk(
     'auth/fetchLogin',
@@ -62,16 +80,28 @@ const authSlice = createSlice({
     initialState: initAuthState,
     reducers: { },
     extraReducers: (builder) =>{
+        //registerManager
         builder.addCase(fetchRegisterManager.pending,(state)=>{
-            state.isLoadingFetchRegister = true;
+            state.isLoadingFetchRegisterManager = true;
         });
         builder.addCase(fetchRegisterManager.fulfilled,(state,action)=>{
-            state.isLoadingFetchRegister = false;
+            state.isLoadingFetchRegisterManager = false;
             console.log(action.payload);
         });
         builder.addCase(fetchRegisterManager.rejected,(state)=>{
-            state.isLoadingFetchRegister = false;
-        });   
+            state.isLoadingFetchRegisterManager = false;
+        }); 
+        //registerEmployee  
+        builder.addCase(fetchRegisterEmployee.pending,(state)=>{
+            state.isLoadingFetchRegisterEmployee = true;
+        });
+        builder.addCase(fetchRegisterEmployee.fulfilled,(state,action)=>{
+            state.isLoadingFetchRegisterEmployee = false;
+            console.log(action.payload);
+        });
+        builder.addCase(fetchRegisterEmployee.rejected,(state)=>{
+            state.isLoadingFetchRegisterEmployee = false;
+        }); 
 
 
         builder.addCase(fetchLogin.pending,(state) => { state.isLoadingFetchLogin =true;}); 
