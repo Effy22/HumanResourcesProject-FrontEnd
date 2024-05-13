@@ -48,27 +48,27 @@ export const loginUser = createAsyncThunk(
 export const setToken = createSlice({
     name: 'company',
     initialState: initCompanyState,
-    reducers: {
-        updateToken(state, action) {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(updateToken, (state, action) => {
             state.token = action.payload;
-        },
-        clearToken(state) {
+        });
+        builder.addCase(clearToken, (state) => {
             state.token = null;
-        }
+        });
     }
 });
 
 export const fetchViewCompanies =createAsyncThunk(
     'company/fetchViewCompanies',
-    async(_, thunkAPI) => {
-        // Store'dan token'ı al
-        const {token}  = thunkAPI.getState().company;
+    async(payload) => {
+       
 
         const result= await fetch(companyUrl.viewCompanies,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`  // Token'ı Authorization header'ına ekle
+                'Authorization': `Bearer ${payload.token}`  // Token'ı Authorization header'ına ekle
             }
         });
         const data = await result.json();
@@ -80,11 +80,12 @@ export const fetchViewCompanies =createAsyncThunk(
 
 export const fetchViewCompaniesAppling =createAsyncThunk(
     'company/fetchViewCompaniesAppling',
-    async() => {
+    async(payload) => {
         const result= await fetch(companyUrl.viewCompaniesAppling,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${payload.token}` 
             }
         }).then(data => data.json())
         .then(data => data);
@@ -98,7 +99,8 @@ export const fetchViewCompaniesAppling =createAsyncThunk(
                 const result = await fetch(companyUrl.approveCompany,{
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${payload.token}` 
                 },
                 body: JSON.stringify(payload)
             }).then(data=>data.json())
@@ -117,7 +119,8 @@ export const fetchRejectCompany = createAsyncThunk(
             const result = await fetch(companyUrl.rejectCompany,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${payload.token}` 
             },
             body: JSON.stringify(payload)
         }).then(data=>data.json())
@@ -136,7 +139,8 @@ export const fetchUpdateCompany = createAsyncThunk(
             const result = await fetch(companyUrl.updateCompany,{
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${payload.token}`  
             },
             body: JSON.stringify(payload)
         }).then(data=>data.json())
@@ -150,11 +154,12 @@ export const fetchUpdateCompany = createAsyncThunk(
 
 export const fetchCompanyCount =createAsyncThunk(
     'company/fetchCompanyCount',
-    async() => {
+    async(payload) => {
         const result= await fetch(companyUrl.getAllCompanyCount,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${payload.token}` 
             }
         }).then(data => data.json())
         .then(data => data);
@@ -204,7 +209,6 @@ const companySlice = createSlice({
         });
             
         build.addCase(fetchApproveCompany.rejected, (state) => {
-            console.log("reject");
             state.isLoadingApproveCompany=false;});
 
         build.addCase(fetchRejectCompany.pending, (state) => {state.isLoadingRejectCompany=true;});

@@ -10,11 +10,9 @@ function MenuItem({ label, onClick, id }) {
 
 function MenuList({ onMenuItemClick }) {
   const menuList = [
-      { id: 0, label: "View All Companies"},
-      { id: 1, label: "View Companies Applying"},
-      { id: 2, label: "Update Company Information"},
-      { id: 3, label: "Create Membership Plan"},
-      { id: 4, label: " Logout" },
+      { id: 0, label: "Add Expenses"},
+      { id: 1, label: "Find All Expenses"},
+      { id: 2, label: " Logout" },
   ];
 
   return (

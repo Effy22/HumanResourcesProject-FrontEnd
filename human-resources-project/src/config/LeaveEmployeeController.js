@@ -1,8 +1,8 @@
 import restApi from './RestApis';
 
 const leaveEmployeeUrl = {
-    findAllMyLeaves: restApi.employeeLeaveUrl + '/find-all-my-leaves',
-    requestLeave: restApi.employeeLeaveUrl + '/request-leave',
+    findAllMyLeaves: restApi.employeeRequirementsUrl + '/find-all-my-leaves',
+    requestLeave: restApi.employeeRequirementsUrl + '/request-leave',
  
 }
 
