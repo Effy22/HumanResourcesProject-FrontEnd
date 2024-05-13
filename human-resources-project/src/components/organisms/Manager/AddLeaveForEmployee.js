@@ -4,7 +4,7 @@ import { fetchAddLeave } from "../../../store/feautures/leaveManagerSlice";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
+//Manager Employee'ye izin ekliyor.
 function AddLeaveForEmployee (){
     const LeaveTypes = {
         ANNUAL_LEAVE: 'ANNUAL_LEAVE',
@@ -17,54 +17,78 @@ function AddLeaveForEmployee (){
         STUDY_LEAVE: 'STUDY_LEAVE',
         HALF_DAY_LEAVE: 'HALF_DAY_LEAVE',
         SPECIAL_LEAVE: 'SPECIAL_LEAVE',
-        COMPASSIONATE_LEAVE: 'COMPASSIONATE_LEAVE',
-        EMERGENCY_LEAVE: 'EMERGENCY_LEAVE',
-        VOLUNTEERING_LEAVE: 'VOLUNTEERING_LEAVE',
-        PUBLIC_HOLIDAY: 'PUBLIC_HOLIDAY',
-        WORK_FROM_HOME: 'WORK_FROM_HOME',
-        FURLOUGH: 'FURLOUGH'
-        // Diğer izin türleri buraya eklenebilir
+        COMPASSIONATE_LEAVE: 'COMPASSIONATE_LEAVE'
+    };
+
+    const mapLeaveTypeToEnum = (selectedType) => {
+        switch (selectedType) {
+            case 'ANNUAL_LEAVE':
+                return 0;
+            case 'SICK_LEAVE':
+                return 1;
+            case 'UNPAID_LEAVE':
+                return 2;
+            case 'MATERNITY_LEAVE':
+                return 3;
+            case 'PATERNITY_LEAVE':
+                return 4;
+            case 'FAMILY_LEAVE':
+                return 5;
+            case 'BEREAVEMENT_LEAVE':
+                return 6;
+            case 'STUDY_LEAVE':
+                return 7;
+            case 'HALF_DAY_LEAVE':
+                return 8;
+            case 'SPECIAL_LEAVE':
+                return 9;
+            case 'COMPASSIONATE_LEAVE':
+                return 10;   
+            default:
+                return null; // Belirsiz veya hatalı durumlar için null veya başka bir değer dönebilirsiniz
+        }
     };
     
     const dispatch = useDispatch();
     
     const [leave, setLeave] = useState({
         employeeId: 0.0,
-        startDate: 0,
-        endDate: 0,
+        startDate: null,
+        endDate: null,
+        employeeName: '',
+        employeeSurname: '',
         leaveType: LeaveTypes.ANNUAL_LEAVE,
     });
+    const [startDateNew, setStartDateNew] = useState(new Date());
+    const [endDateNew, setEndDateNew] = useState(new Date());
 
+    const takenToken = localStorage.getItem('jwtToken');
     const addLeave = ()=>{
-        dispatch(fetchAddLeave(leave));
-    };
-
-    const convertToLong = (dateString) => {
-
-        const date = new Date(dateString);
-        return isNaN(date.getTime()) ? 0 : date.getTime();
-    };
-
-    const handleStartDateChange = (evt) => {
+     
         setLeave({
             ...leave,
-            startDate: convertToLong(evt.target.value),
-        });
-    };
+            token: takenToken,
+            startDate: startDateNew,
+            endDate: endDateNew
+        })
 
-    const handleEndDateChange = (evt) => {
-        setLeave({
-            ...leave,
-            endDate: convertToLong(evt.target.value),
+        dispatch(fetchAddLeave(leave))
+        .then(() => {
+            alert('İzin başarıyla eklendi');
+        })
+        .catch((error) => {
+            console.error('İzin eklenirken hata oluştu:', error);
+            alert('İzin eklenirken bir hata oluştu');
         });
     };
 
     const handleLeaveTypeChange = (event) => {
         setLeave({
-          ...leave,
-          leaveType: event.target.value
+            ...leave,
+            leaveType: mapLeaveTypeToEnum(event.target.value),
         });
-      };
+    };
+
 
   return (
     <>
@@ -84,22 +108,60 @@ function AddLeaveForEmployee (){
                 />
             </div>
             <div className="mb-3">
+                <label className="form-label" style={{ display: 'block' }}>Employee Name</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Name"
+                    onChange={(evt) => {
+                        setLeave({
+                            ...leave,
+                            employeeName: evt.target.value,
+                        });
+                    }}
+                />
+            </div>
+            <div className="mb-3">
+                <label className="form-label" style={{ display: 'block' }}>Employee Surname</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Surname"
+                    onChange={(evt) => {
+                        setLeave({
+                            ...leave,
+                            employeeSurname: evt.target.value,
+                        });
+                    }}
+                />
+            </div>
+       
+            <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>Start Date</label>
                 <ReactDatePicker
-                        selected={leave.startDate}
-                        onChange={handleStartDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        className="form-control"
-                    />
+                    selected={startDateNew}
+                    onChange={(date) => {
+                        const formattedDate = date.toISOString().split('T')[0];
+                        setStartDateNew(formattedDate);
+                    }}
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control"
+                />
+
             </div>
+
             <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>End Date</label>
                 <ReactDatePicker
-                        selected={leave.endDate}
-                        onChange={handleEndDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        className="form-control"
-                    />
+                    selected={endDateNew}
+                    onChange={(date) => {
+                        const formattedDate = date.toISOString().split('T')[0];
+                        setEndDateNew(formattedDate);
+                    }}
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control"
+                />
+
             </div>
             
             <div className="mb-3">

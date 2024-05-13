@@ -16,35 +16,33 @@ const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
-  const [updateCompanyList, setUpdateCompanyList] =useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   
   
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
-    dispatch(fetchGetAllPendingLeavesOfEmployees(token)); 
-  }, [dispatch]);
+  const takenToken = localStorage.getItem('jwtToken');
+useEffect(() => {  
+  if (takenToken) {
+    dispatch(fetchGetAllPendingLeavesOfEmployees(takenToken)); 
+  } else {
+    // Token yoksa yapılacak işlemleri buraya ekleyebilirsiniz.
+    console.log('Token not found in localStorage');
+  }
+}, [dispatch, takenToken]);
 
   const handleMenuItemClick = (id) => {
     if (id === 5) {
-      // Logout işlemi
-      localStorage.removeItem('jwtToken'); // JWT token'ı kaldır
-      window.location.href = '/'; // Ana sayfaya yönlendir
+      localStorage.removeItem('jwtToken'); 
+      window.location.href = '/'; 
     } else if (id === 2) {
-      // Company sayfasına git
-      window.location.href = '/company'; // Company sayfasına yönlendir
+      window.location.href = '/company'; 
     } else {
-      // Diğer menü öğeleri için
-      setMenuId(id); // State'i güncelle
+      setMenuId(id);
     }
   };
   const handleViewPendingLeavesClick = async () => {
     const token = localStorage.getItem('jwtToken');
     setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees(token)));
   };
-  const handleUpdateCompanyClick = () => {
-    setUpdateCompanyList(dispatch(fetchUpdateCompany()));
-};
   
 
   return (

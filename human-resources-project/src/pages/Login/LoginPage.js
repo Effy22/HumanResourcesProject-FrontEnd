@@ -11,8 +11,6 @@ function Login(){
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const isLogin = useSelector(state => state.auth.isLogin);
-	const userRole = useSelector(state => state.auth.role);
 	const navigate = useNavigate();
 
   // Kullanıcı giriş yapmışsa ve rolüne göre yönlendirme yap
@@ -21,7 +19,9 @@ function Login(){
         console.log(response); // Yanıtı konsola yazdır
         if (response.payload && response.payload.data && response.payload.data.token) {
             const token = response.payload.data.token;
+			const email = response.payload.data.email;
             localStorage.setItem('jwtToken', token);
+			localStorage.setItem('email', email);
 			const gelenRol = response.payload.data.role;
             if (gelenRol === 'MANAGER') {
                 navigate('/manager');
@@ -35,7 +35,6 @@ function Login(){
         }
     });
 }
-
 
 
     return(

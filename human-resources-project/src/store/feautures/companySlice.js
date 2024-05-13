@@ -209,7 +209,6 @@ const companySlice = createSlice({
 });
 
 
-
 export const {setActiveMenuId} = companySlice.actions;
 //export const { updateToken, clearToken } = setToken.actions;
 export default companySlice.reducer;

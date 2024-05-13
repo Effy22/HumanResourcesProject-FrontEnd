@@ -2,9 +2,7 @@ import React from "react";
 import ProfileCard from "./ProfileCard";
 import logo from '../../../images/logo.png';
 
-
 function Header () {
-  
   return (
     <header className="header">
       <div className="logo-container" onClick={() => alert("Menu opened!")}>
