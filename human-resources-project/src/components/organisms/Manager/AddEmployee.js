@@ -28,7 +28,14 @@ function AddEmployee() {
         ...employee,
         token: takenToken,
     });
-    dispatch(fetchRegisterEmployee(employee));
+    dispatch(fetchRegisterEmployee(employee))
+    .then(() => {
+        alert('Kullanıcı başarıyla eklendi');
+    })
+    .catch((error) => {
+        console.error('Kullanıcı eklenirken hata oluştu:', error);
+        alert('Kullanıcı eklenirken bir hata oluştu');
+    });
   };
 
 

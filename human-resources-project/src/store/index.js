@@ -5,13 +5,15 @@ import {
     leaveEmployeeSlice,
     leaveManagerSlice,
     managerSlice,
-    expensesSlice
+    expensesSlice,
+    employeeSlice
 } from './feautures';
 
 const store = configureStore({
     reducer: {
         auth: authSlice,
         manager: managerSlice,
+        employee: employeeSlice,
         company: companySlice,
         leaveManager: leaveManagerSlice,
         leaveEmployee: leaveEmployeeSlice,
