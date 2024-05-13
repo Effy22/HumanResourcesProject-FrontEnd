@@ -4,16 +4,19 @@ import './Manager.css'
 import Header from '../../components/molecules/Manager/Header'
 import MenuList from '../../components/molecules/Manager/MenuList'
 import { fetchGetAllPendingLeavesOfEmployees } from '../../store/feautures/leaveManagerSlice';
+import {fetchUpdateCompany } from '../../store/feautures/companySlice';
 import PendingLeaveList from '../../components/organisms/Manager/PendingLeaveList';
 import AddLeaveForEmployee from '../../components/organisms/Manager/AddLeaveForEmployee';
 import AddEmployee from '../../components/organisms/Manager/AddEmployee';
-import EmployeeList from '../../components/organisms/Manager/EmployeeList'
+import EmployeeList from '../../components/organisms/Manager/EmployeeList';
+import UpdateCompanyList from "../../components/organisms/Manager/UpdateCompanyList";
 
 
 const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
+  const [updateCompanyList, setUpdateCompanyList] =useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   
   
@@ -39,6 +42,9 @@ const Manager = () => {
     const token = localStorage.getItem('jwtToken');
     setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees(token)));
   };
+  const handleUpdateCompanyClick = () => {
+    setUpdateCompanyList(dispatch(fetchUpdateCompany()));
+};
   
 
   return (
@@ -55,8 +61,10 @@ const Manager = () => {
                     {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                     {menuId === 0 && <AddEmployee />}
                     {menuId === 1 && <EmployeeList />}
+                    {menuId === 2 && <UpdateCompanyList updateCompanyList={updateCompanyList} onMenuItemClick={handleUpdateCompanyClick} />}
                     {menuId === 3 && <AddLeaveForEmployee/>}
                     {menuId === 4 && <PendingLeaveList pendingLeaveList={pendingLeaveList} onMenuItemClick ={handleViewPendingLeavesClick} />}
+                    
                    
                   </div>
             <div>

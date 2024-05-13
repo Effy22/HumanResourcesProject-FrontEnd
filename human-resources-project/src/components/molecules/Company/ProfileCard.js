@@ -9,6 +9,7 @@ function ProfileCard() {
       </div>
     </div>
   );
-};
+}; 
+
 
 export default ProfileCard;

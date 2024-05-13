@@ -8,6 +8,7 @@ function CompanyList (){
   const companyList= useSelector(state => state.company.companyList);
 
 
+
   return (
     <>
       <div className="rowT">

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import companyUrl from "../../config/CompanyController";
-import authUrl from "../../config/AuthController";
 
 const initCompanyState = {
     companyList: [],
@@ -13,62 +12,21 @@ const initCompanyState = {
     isLoadingUpdateCompany: false,
     isLoadingCompanyCount: false,
     activeMenuId: 0,
-    data: {},
-    token: null,
-    error: null
+    data: {}
 }
 
 
-// Kullanıcı girişi işlemi
-export const loginUser = createAsyncThunk(
-    'company/loginUser',
-    async ({ email, password }, thunkAPI) => {
-        try {
-            const response = await fetch(authUrl.login, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                // Başarılı giriş durumunda token'ı sakla
-                thunkAPI.dispatch(setToken(data.token));
-            }
-            return data;
-        } catch (error) {
-            console.error('Login failed:', error);
-            throw error;
-        }
-    }
-);
-
-// Token'ı ayarla
-export const setToken = createSlice({
-    name: 'company',
-    initialState: initCompanyState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(updateToken, (state, action) => {
-            state.token = action.payload;
-        });
-        builder.addCase(clearToken, (state) => {
-            state.token = null;
-        });
-    }
-});
-
 export const fetchViewCompanies =createAsyncThunk(
     'company/fetchViewCompanies',
-    async(payload) => {
-       
+    async(token) => {
+        const url = `https://http://localhost:3000/company/?token=${token}`;
 
-        const result= await fetch(companyUrl.viewCompanies,{
+        try{
+            const result= await fetch(url,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}`  // Token'ı Authorization header'ına ekle
+                'Authorization': `Bearer ${token}`    // Token'ı Authorization header'ına ekle
             }
         });
         const data = await result.json();
@@ -76,16 +34,20 @@ export const fetchViewCompanies =createAsyncThunk(
             throw new Error(data.message || 'Failed to fetch list');
         }
         return data;
+        }catch (error) {
+            console.error('Fetch view companies failed:', error);
+            throw error;
+        }    
     });
 
 export const fetchViewCompaniesAppling =createAsyncThunk(
     'company/fetchViewCompaniesAppling',
-    async(payload) => {
+    async(token) => {
         const result= await fetch(companyUrl.viewCompaniesAppling,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Authorization': `Bearer ${token}` 
             }
         }).then(data => data.json())
         .then(data => data);
@@ -249,6 +211,6 @@ const companySlice = createSlice({
 
 
 export const {setActiveMenuId} = companySlice.actions;
-export const { updateToken, clearToken } = setToken.actions;
+//export const { updateToken, clearToken } = setToken.actions;
 export default companySlice.reducer;
 

@@ -5,24 +5,28 @@ import Header from '../../components/molecules/Company/Header';
 import CompanyList from '../../components/organisms/Company/CompanyList';
 import CompanyApplingList from '../../components/organisms/Company/CompanyApplingList';
 import MenuList from '../../components/molecules/Company/MenuList';
-import {fetchUpdateCompany, fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
+import {fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
 import './Company.css';
-import UpdateCompany from "../../components/organisms/Company/UpdateCompany";
-import UpdateList from "../../components/organisms/Company/UpdateList";
+
 
 // Company bileşeni
 function Company() {
     const dispatch=useDispatch();
     const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
-    const [companyList, setCompanyList] = useState([]);
-    const [companyApplingList, setCompanyApplingList] = useState([]);
-    const [updateList, setUpdateList] =useState([]);
+    const [companyList, setCompanyList] = useState({
+        token: '',
+    });
+    const [companyApplingList, setCompanyApplingList] = useState({
+        token: '',
+    } );
+
+    const takenToken = localStorage.getItem('jwtToken');
 
     useEffect(() => {
-        dispatch(fetchViewCompanies());
-        dispatch(fetchViewCompaniesAppling());
+        dispatch(fetchViewCompanies(takenToken));
+        dispatch(fetchViewCompaniesAppling(takenToken));
 
-    }, [dispatch]);
+    }, [dispatch,takenToken]); 
 
     // Menü öğesine tıklandığında tetiklenecek fonksiyon
     const handleMenuItemClick = (id) => {
@@ -30,14 +34,20 @@ function Company() {
     };
 
     const handleViewCompaniesClick = () => {
-        setCompanyList(dispatch(fetchViewCompanies()));
+        setCompanyList({
+            ...companyList,
+            token: takenToken
+        });
+        dispatch(fetchViewCompanies(companyList));
     };
     const handleViewCompaniesApplingClick = () => {
-        setCompanyApplingList(dispatch(fetchViewCompaniesAppling()));
+        setCompanyApplingList({
+            ...companyApplingList,
+            token: takenToken
+        });
+        dispatch(fetchViewCompaniesAppling(companyApplingList));
     };
-    const handleUpdateClick = () => {
-        setUpdateList(dispatch(fetchUpdateCompany()));
-    };
+
     return (
         <>
             <div className="container">
@@ -54,7 +64,6 @@ function Company() {
                         {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                         {menuId === 0 && <CompanyList companyList={companyList} onMenuItemClick ={handleViewCompaniesClick} />}
                         {menuId === 1 && <CompanyApplingList companyApplingList={companyApplingList} onMenuItemClick={handleViewCompaniesApplingClick} />}
-                        {menuId === 2 && <UpdateList updateList={updateList} onMenuItemClick={handleUpdateClick} />}
                     </div>
                 </div>
             </div> 
