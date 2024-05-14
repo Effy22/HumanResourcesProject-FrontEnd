@@ -23,12 +23,53 @@ function AddExpenses(){
         CONTRACTOR_FEES: 'CONTRACTOR_FEES',
         TAXES: 'TAXES',
         PRINTING: 'PRINTING',
-        SHIPPING: 'SHIPPING',
-        REPAIRS_AND_MAINTENANCE: 'REPAIRS_AND_MAINTENANCE',
-        INTERNET_SERVICES: 'INTERNET_SERVICES',
-        TELEPHONE_SERVICES: 'TELEPHONE_SERVICES',
         OTHER : 'OTHER'
     }
+
+    const mapExpensesTypeToEnum = (selectedType) => {
+        switch (selectedType) {
+            case 'OFFICE_RENT':
+                return 0;
+            case 'UTILITIES':
+                return 1;
+            case 'OFFICE_SUPPLIES':
+                return 2;
+            case 'EQUIPMENT_MAINTENANCE':
+                return 3;
+            case 'ADVERTISING':
+                return 4;
+            case 'MARKETING':
+                return 5;
+            case 'TRAVEL':
+                return 6;
+            case 'TRAINING':
+                return 7;
+            case 'CONSULTING_FEES':
+                return 8;
+            case 'SOFTWARE_SUBSCRIPTIONS':
+                return 9;
+            case 'HARDWARE_PURCHASE':
+                return 10;
+            case 'INSURANCE':
+                return 11;
+            case 'LEGAL_FEES':
+                return 12;
+            case 'ACCOUNTING_FEES':
+                return 13;
+            case 'EMPLOYEE_SALARIES':
+                return 14;
+            case 'CONTRACTOR_FEES':
+                return 15;
+            case 'TAXES':
+                return 16;
+            case 'PRINTING':
+                return 17;
+            case 'OTHER':
+                return 18;    
+            default:
+                return null; 
+        }
+    };
 
     const dispatch= useDispatch();
     const [expenses, setExpenses] =useState({

@@ -16,6 +16,7 @@ const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
+  const [updateCompanyList, setUpdateCompanyList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   
   
@@ -23,6 +24,7 @@ const Manager = () => {
 useEffect(() => {  
   if (takenToken) {
     dispatch(fetchGetAllPendingLeavesOfEmployees(takenToken)); 
+    dispatch(fetchUpdateCompany(takenToken));
   } else {
     // Token yoksa yapılacak işlemleri buraya ekleyebilirsiniz.
     console.log('Token not found in localStorage');
@@ -38,6 +40,11 @@ useEffect(() => {
     } else {
       setMenuId(id);
     }
+  };
+
+  const handleUpdateCompanyClick = async () => {
+    const token = localStorage.getItem('jwtToken');
+    setUpdateCompanyList(dispatch(fetchUpdateCompany(token)));
   };
   const handleViewPendingLeavesClick = async () => {
     const token = localStorage.getItem('jwtToken');

@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import companyUrl from "../../config/CompanyController";
 
 const initCompanyState = {
+    data: {},
+    token: '',
+    activeMenuId: 0,
     companyList: [],
     companyApplingList: [],
     updateList: [],
@@ -10,23 +13,18 @@ const initCompanyState = {
     isLoadingApproveCompany: false,
     isLoadingRejectCompany:false,
     isLoadingUpdateCompany: false,
-    isLoadingCompanyCount: false,
-    activeMenuId: 0,
-    data: {}
+    isLoadingCompanyCount: false  
 }
 
 
 export const fetchViewCompanies =createAsyncThunk(
     'company/fetchViewCompanies',
     async(token) => {
-        const url = `https://http://localhost:3000/company/?token=${token}`;
-
         try{
-            const result= await fetch(url,{
+            const result= await fetch(`${companyUrl.viewCompanies}?token=${token}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`    // Token'ı Authorization header'ına ekle
             }
         });
         const data = await result.json();
@@ -43,11 +41,10 @@ export const fetchViewCompanies =createAsyncThunk(
 export const fetchViewCompaniesAppling =createAsyncThunk(
     'company/fetchViewCompaniesAppling',
     async(token) => {
-        const result= await fetch(companyUrl.viewCompaniesAppling,{
+        const result= await fetch(`${companyUrl.viewCompaniesAppling}?token=${token}`,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` 
+                'Content-Type': 'application/json'
             }
         }).then(data => data.json())
         .then(data => data);
@@ -58,11 +55,10 @@ export const fetchViewCompaniesAppling =createAsyncThunk(
         'company/fetchApproveCompany',
         async(payload) => {
             try{
-                const result = await fetch(companyUrl.approveCompany,{
+                const result = await fetch(`${companyUrl.approveCompany}?token=${payload.token}`,{
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${payload.token}` 
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             }).then(data=>data.json())
@@ -78,11 +74,10 @@ export const fetchRejectCompany = createAsyncThunk(
     'company/fetchRejectCompany',
     async(payload) => {
         try{
-            const result = await fetch(companyUrl.rejectCompany,{
+            const result = await fetch(`${companyUrl.rejectCompany}?token=${payload.token}`,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         }).then(data=>data.json())
@@ -98,11 +93,10 @@ export const fetchUpdateCompany = createAsyncThunk(
     'company/fetchUpdateCompany',
     async(payload) => {
         try{
-            const result = await fetch(companyUrl.updateCompany,{
+            const result = await fetch(`${companyUrl.updateCompany}?token=${payload.token}`,{
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}`  
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         }).then(data=>data.json())
@@ -210,6 +204,5 @@ const companySlice = createSlice({
 
 
 export const {setActiveMenuId} = companySlice.actions;
-//export const { updateToken, clearToken } = setToken.actions;
 export default companySlice.reducer;
 

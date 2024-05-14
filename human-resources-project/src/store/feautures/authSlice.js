@@ -7,11 +7,32 @@ const initAuthState = {
     token: '',
     data: {},
     isLogin: false,
+    isLoadingFindByToken: false,
+    isFoundByToken: false,
     isLoadingFetchRegisterManager : false,
     isLoadingFetchRegisterEmployee: false,
     isLoadingFetchLogin: false,
     role: '', 
 }
+
+//find-by-token(for admin)
+export const fetchFindByToken = createAsyncThunk(
+    'auth/fetchFindByToken',
+    async (token) => { 
+        try {
+            const result = await fetch(`${authController.findByToken}?token=${token}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+            .then(data => data);
+            return result;
+        } catch(error) {
+            console.log('ERROR: auth/fetchFindByToken', error);
+        }
+    }
+);
 
 export const fetchRegisterManager = createAsyncThunk(
     'auth/fetchRegisterManager',
@@ -119,6 +140,24 @@ const authSlice = createSlice({
         builder.addCase(fetchLogin.rejected,(state) => {
             state.isLoadingFetchLogin =false;
         });
+
+        //find-by-token
+        builder.addCase(fetchFindByToken.pending,(state)=>{
+            state.isLoadingFindByToken =true;
+        });
+        builder.addCase(fetchFindByToken.fulfilled, (state,action)=>{
+            state.isLoadingFindByToken = false;
+                console.log("gelen data...: ", action.payload);
+                state.data = action.payload.data;
+                state.isFoundByToken= true;
+        
+        });
+        builder.addCase(fetchFindByToken.rejected,(state)=>{
+            state.isLoadingFindByToken=false;
+        }); 
+
+
+
     }
 
 })

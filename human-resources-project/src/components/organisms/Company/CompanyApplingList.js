@@ -8,17 +8,18 @@ function CompanyApplingList (){
   const dispatch=useDispatch();
   const companyApplingList= useSelector(state => state.company.companyApplingList);
 
-  const takenToken=localStorage.getItem('jwtToken');
+  const token=localStorage.getItem('jwtToken');
+  console.log("Retrieved token from localStorage:", token); 
 
   const handleApprove = (companyId) => {
-
-    dispatch(fetchApproveCompany({ companyId, token: takenToken })); 
+    console.log("Approving company with ID:", companyId, "and token:", token); 
+    dispatch(fetchApproveCompany({ token, id: companyId })); 
     console.log("Şirket onaylandı:", companyId);
   };
   
   const handleReject = (companyId) => {
-    
-    dispatch(fetchRejectCompany({ companyId, token: takenToken })); 
+    console.log("Rejecting company with ID:", companyId, "and token:", token); 
+    dispatch(fetchRejectCompany({ token, id: companyId })); 
     console.log("Şirket reddedildi:", companyId);
 
   };

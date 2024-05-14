@@ -6,6 +6,7 @@ function CompanyList (){
 
   const dispatch=useDispatch();
   const companyList= useSelector(state => state.company.companyList);
+  
 
 
 

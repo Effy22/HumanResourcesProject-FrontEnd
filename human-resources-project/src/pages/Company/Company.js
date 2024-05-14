@@ -13,39 +13,38 @@ import './Company.css';
 function Company() {
     const dispatch=useDispatch();
     const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
-    const [companyList, setCompanyList] = useState({
-        token: '',
-    });
-    const [companyApplingList, setCompanyApplingList] = useState({
-        token: '',
-    } );
+    const [companyList, setCompanyList] = useState([]);
+    const [companyApplingList, setCompanyApplingList] = useState([]);
 
     const takenToken = localStorage.getItem('jwtToken');
 
     useEffect(() => {
-        dispatch(fetchViewCompanies(takenToken));
-        dispatch(fetchViewCompaniesAppling(takenToken));
-
-    }, [dispatch,takenToken]); 
+        if(takenToken){
+             dispatch(fetchViewCompanies(takenToken));
+            dispatch(fetchViewCompaniesAppling(takenToken));
+        }else{
+            console.log("Token not found in localStorage");
+        }
+    }, [dispatch, takenToken]); 
 
     // Menü öğesine tıklandığında tetiklenecek fonksiyon
     const handleMenuItemClick = (id) => {
-        setMenuId(id); // State'i güncelle
+        if(id==3){
+            localStorage.removeItem('jwtToken');
+            window.location.href= '/';
+        }else{
+            setMenuId(id);
+        }
+     
     };
 
-    const handleViewCompaniesClick = () => {
-        setCompanyList({
-            ...companyList,
-            token: takenToken
-        });
-        dispatch(fetchViewCompanies(companyList));
+    const handleViewCompaniesClick = async () => {
+        const token =localStorage.getItem('jwtToken');
+        setCompanyList(dispatch(fetchViewCompanies(token))) ;
     };
-    const handleViewCompaniesApplingClick = () => {
-        setCompanyApplingList({
-            ...companyApplingList,
-            token: takenToken
-        });
-        dispatch(fetchViewCompaniesAppling(companyApplingList));
+    const handleViewCompaniesApplingClick = async () => {
+        const token =localStorage.getItem('jwtToken');
+        setCompanyApplingList(dispatch(fetchViewCompaniesAppling(token)));
     };
 
     return (
