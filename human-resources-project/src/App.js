@@ -6,6 +6,8 @@ import Register from './pages/Register/Register';
 import Login from './pages/Login/LoginPage';
 import Company from './pages/Company/Company';
 import Manager from './pages/Manager/Manager';
+import Employee from './pages/Employee/Employee';
+import ChangePassword from './pages/ChangePassword/ChangePassword';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
          <Route path='/login' element={<Login />}/>
          <Route path='/company' element={<Company />} />
          <Route path='/manager' element={<Manager/>} />
+         <Route path='/employee' element={<Employee/>} />
+         <Route path='/change-password' element={<ChangePassword/>} />
          </Routes>
     </BrowserRouter>
   );

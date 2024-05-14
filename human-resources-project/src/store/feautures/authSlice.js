@@ -10,6 +10,8 @@ const initAuthState = {
     isLoadingFetchRegisterManager : false,
     isLoadingFetchRegisterEmployee: false,
     isLoadingFetchLogin: false,
+    isLoadingFetchChangePassword: false,
+    isChangedPassword: false,
     role: '', 
 }
 
@@ -75,6 +77,34 @@ export const fetchLogin =createAsyncThunk(
      }
 );
 
+export const fetchChangePassword =createAsyncThunk(
+    'auth/fetchChangePassword',
+     async (payload) => {
+
+        try{ 
+        const result= await fetch(authController.changePassword, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }).then(data =>data.json())
+        .then(data =>data);
+        console.log('Change Password sonuç..: ', result);
+        if(result.status === 200){
+            window.location.href = '/login';
+        }
+        return result;
+
+        } catch(error){
+            console.log('ERROR: auth/fetchChangePassword...: ', error);
+        }
+       
+     }
+);
+
+
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: initAuthState,
@@ -118,6 +148,20 @@ const authSlice = createSlice({
 
         builder.addCase(fetchLogin.rejected,(state) => {
             state.isLoadingFetchLogin =false;
+        });
+
+        //changePassword
+        builder.addCase(fetchChangePassword.pending,(state) => {
+             state.isLoadingFetchChangePassword =true;
+        });
+        builder.addCase(fetchChangePassword.fulfilled,(state,action) => {
+            state.isLoadingFetchChangePassword =false;
+            console.log("gelen data change password: ",action.payload);
+            state.data = action.payload.data;
+            state.isChangedPassword = true;
+        });
+        builder.addCase(fetchChangePassword.rejected,(state) => {
+            state.isLoadingFetchChangePassword =false;
         });
     }
 

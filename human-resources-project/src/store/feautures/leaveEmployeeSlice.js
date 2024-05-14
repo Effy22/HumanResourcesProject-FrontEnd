@@ -40,7 +40,8 @@ export const fetchRequestLeave =createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${payload.token}` 
-            }
+            },
+            body: JSON.stringify(payload)
         }).then(data => data.json())
         .then(data => data);
         return result;

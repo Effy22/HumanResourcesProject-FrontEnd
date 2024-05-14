@@ -14,11 +14,11 @@ function MenuItem({ label, icon, onClick, id }) {
 
 function MenuList({ onMenuItemClick }) {
   const menuList = [
-    { id: 0, label: " Update Employee", icon: faPersonCirclePlus },
-    { id: 1, label: " ", icon: faPeopleGroup },
-    { id: 2, label: " ", icon: faBuilding },
-    { id: 3, label: " ", icon: faPlane },
-    { id: 4, label: " ", icon: faPeopleGroup },
+    { id: 0, label: " Change Password ", icon: faPersonCirclePlus },
+    { id: 1, label: " Update Employee ", icon: faUser },
+    { id: 2, label: " Add Leave ", icon: faPlane },
+    { id: 3, label: " Find All My Leaves ", icon: faPlane },
+    { id: 4, label: " Add Expense ", icon: faPeopleGroup },
     { id: 5, label: " Logout", icon: faArrowRightFromBracket },
   ];
 
@@ -47,3 +47,4 @@ function MenuList({ onMenuItemClick }) {
 }
 
 export default MenuList;
+

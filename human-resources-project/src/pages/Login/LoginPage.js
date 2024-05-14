@@ -26,7 +26,7 @@ function Login(){
             if (gelenRol === 'MANAGER') {
                 navigate('/manager');
             } else if (gelenRol === 'EMPLOYEE') {
-                navigate('/register');
+                navigate('/employee');
             }else if (gelenRol === 'ADMIN'){
 				navigate('/company');
 			}
