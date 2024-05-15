@@ -1,6 +1,8 @@
-import React from "react";
+
 import ProfileCard from "./ProfileCard";
 import logo from '../../../images/logo.png';
+import React from "react";
+
 
 function Header () {
   return (

@@ -4,8 +4,9 @@ import {useSelector} from "react-redux";
 
 function PendingLeaveList (){
 
+  //openfeign entegre edildikten sonra tekrar deniycem 
  
-  const pendingLeavesList= useSelector(state => state.leaveManager.pendingLeaveList);
+  const employeeList= useSelector(state => state.employee.employeeList);
 
   return (
     <>
@@ -25,7 +26,7 @@ function PendingLeaveList (){
             </tr>
           </thead>
           <tbody>
-            {pendingLeavesList.map((data, index) => (
+            {employeeList.map((data, index) => (
               <tr key={index}>
                 <th scope="row">{data.id}</th>
                 <td>{data.employeeId}</td>

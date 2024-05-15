@@ -12,9 +12,8 @@ function MenuList({ onMenuItemClick }) {
   const menuList = [
       { id: 0, label: "View All Companies"},
       { id: 1, label: "View Companies Applying"},
-      { id: 2, label: "Update Company Information"},
-      { id: 3, label: "Create Membership Plan"},
-      { id: 4, label: " Logout" },
+      { id: 2, label: "Create Membership Plan"},
+      { id: 3, label: " Logout" },
   ];
 
   return (

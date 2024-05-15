@@ -6,9 +6,11 @@ function PendingLeaveList (){
 
  
   const pendingLeavesList= useSelector(state => state.leaveManager.pendingLeaveList);
- 
 
-
+  if (!pendingLeavesList || pendingLeavesList.length === 0) {
+    return <div>No pending leaves found.</div>;
+  }
+  
   return (
     <>
       <div className="rowT">

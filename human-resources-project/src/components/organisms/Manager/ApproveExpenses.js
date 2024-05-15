@@ -4,7 +4,6 @@ import { fetchApproveExpenses } from "../../../store/feautures/expensesSlice";
 function ApproveExpenses (){
 
     const dispatch =useDispatch();
-    //çalışıyor mu konrol etmek kaldı!
     const pendingExpensesList = useSelector(state => state.expenses.pendingExpensesList);
 
     const handleApprove = (expensesId) => {

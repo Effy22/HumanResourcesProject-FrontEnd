@@ -7,6 +7,8 @@ const initAuthState = {
     token: '',
     data: {},
     isLogin: false,
+    isLoadingFindByToken: false,
+    isFoundByToken: false,
     isLoadingFetchRegisterManager : false,
     isLoadingFetchRegisterEmployee: false,
     isLoadingFetchLogin: false,
@@ -14,6 +16,25 @@ const initAuthState = {
     isChangedPassword: false,
     role: '', 
 }
+
+//find-by-token(for admin)
+export const fetchFindByToken = createAsyncThunk(
+    'auth/fetchFindByToken',
+    async (token) => { 
+        try {
+            const result = await fetch(`${authController.findByToken}?token=${token}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+            .then(data => data);
+            return result;
+        } catch(error) {
+            console.log('ERROR: auth/fetchFindByToken', error);
+        }
+    }
+);
 
 export const fetchRegisterManager = createAsyncThunk(
     'auth/fetchRegisterManager',
@@ -23,7 +44,7 @@ export const fetchRegisterManager = createAsyncThunk(
             method: 'POST',
            
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         }).then(data=>data.json())
@@ -150,19 +171,23 @@ const authSlice = createSlice({
             state.isLoadingFetchLogin =false;
         });
 
-        //changePassword
-        builder.addCase(fetchChangePassword.pending,(state) => {
-             state.isLoadingFetchChangePassword =true;
+        //find-by-token
+        builder.addCase(fetchFindByToken.pending,(state)=>{
+            state.isLoadingFindByToken =true;
         });
-        builder.addCase(fetchChangePassword.fulfilled,(state,action) => {
-            state.isLoadingFetchChangePassword =false;
-            console.log("gelen data change password: ",action.payload);
-            state.data = action.payload.data;
-            state.isChangedPassword = true;
+        builder.addCase(fetchFindByToken.fulfilled, (state,action)=>{
+            state.isLoadingFindByToken = false;
+                console.log("gelen data...: ", action.payload);
+                state.data = action.payload.data;
+                state.isFoundByToken= true;
+        
         });
-        builder.addCase(fetchChangePassword.rejected,(state) => {
-            state.isLoadingFetchChangePassword =false;
-        });
+        builder.addCase(fetchFindByToken.rejected,(state)=>{
+            state.isLoadingFindByToken=false;
+        }); 
+
+
+
     }
 
 })
