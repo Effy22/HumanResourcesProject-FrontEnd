@@ -19,7 +19,7 @@ function MenuList({ onMenuItemClick }) {
     { id: 2, label: " Add Leave ", icon: faPlane },
     { id: 3, label: " Find All My Leaves ", icon: faPlane },
     { id: 4, label: " Add Expense ", icon: faPeopleGroup },
-    { id: 5, label: " Find All My Expenses ", icon: faPeopleGroup },
+    { id: 5, label: " Expenses List", icon: faPeopleGroup },
     { id: 6, label: " Get All My Shifts ", icon: faArrowRightFromBracket },
     { id: 7, label: " Logout", icon: faArrowRightFromBracket },
   ];

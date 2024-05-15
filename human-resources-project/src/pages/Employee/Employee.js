@@ -9,12 +9,16 @@ import FindAllMyLeave from '../../components/organisms/Employee/FindAllMyLeave';
 import { fetchFindAllMyLeaves } from '../../store/feautures/leaveEmployeeSlice';
 import AddExpenses from '../../components/organisms/Employee/AddExpenses';
 import ExpensesList from '../../components/organisms/Employee/ExpensesList';
+import {fetchAddExpenses, fetchFindAllExpenses} from '../../store/feautures/expensesSlice';
+
+
 
 const Employee = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [allLeaveList, setAllLeaveList] = useState([]);
-  
+  const [expensesList, setExpensesList] =useState([]);
+
   const takenToken = localStorage.getItem('jwtToken');
   
 
@@ -30,6 +34,15 @@ const Employee = () => {
  }else{
      console.log("Token not found in localStorage");
  }
+}, [dispatch, takenToken]); 
+
+useEffect(() => {
+  if(takenToken){
+      dispatch(fetchAddExpenses(takenToken));
+      dispatch(fetchFindAllExpenses(takenToken));
+  }else{
+      console.log("Token not found in localStorage");
+  }
 }, [dispatch, takenToken]); 
 
   const handleMenuItemClick = (id) => {
@@ -54,7 +67,12 @@ const Employee = () => {
   const handleFindAllMyLeavesClick = async () => {
     const token =localStorage.getItem('jwtToken');
     setAllLeaveList(dispatch(fetchFindAllMyLeaves(token)));
-  } 
+  };
+  
+  const handleExpensesListClick = async () => {
+    const token =localStorage.getItem('jwtToken');
+    setExpensesList(dispatch(fetchFindAllExpenses(token)));
+  };
 
   
   return (
@@ -76,7 +94,7 @@ const Employee = () => {
                     {menuId === 2 && <AddLeave/>}
                     {menuId === 3 && <FindAllMyLeave allLeaveList={allLeaveList} onMenuItemClick={handleFindAllMyLeavesClick}/>}
                     {menuId === 4 && <AddExpenses/>}
-                    {menuId === 5 && <ExpensesList/>}
+                    {menuId === 5 && <ExpensesList expensesList={expensesList} onMenuItemClick={handleExpensesListClick} />}
 
                 </div>
                     
