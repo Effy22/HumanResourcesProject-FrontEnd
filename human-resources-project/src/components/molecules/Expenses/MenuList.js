@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBuilding, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBuilding, faPeopleGroup, faPersonCircleCheck, faPersonCirclePlus, faPlane, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
+
 
 function MenuItem({ label, icon, onClick, id }) {
     return (
@@ -13,11 +14,9 @@ function MenuItem({ label, icon, onClick, id }) {
 
 function MenuList({ onMenuItemClick }) {
   const menuList = [
-      { id: 0, label: "  View All Companies", icon: faPeopleGroup },
-      { id: 1, label: "  View Companies Applying", icon: faPeopleGroup },
-      { id: 2, label: "  Update Company", icon: faBuilding },
-      { id: 3, label: "  Create Membership Plan", icon: faBuilding},
-      { id: 4, label: "  Logout", icon: faArrowRightFromBracket },
+      { id: 0, label: "  Add Expenses", icon: faPlane},
+      { id: 1, label: "  Expenses List", icon: faPeopleGroup },
+      { id: 2, label: "  Employee Page", icon: faArrowRightFromBracket },
   ];
 
   return (
@@ -36,10 +35,10 @@ function MenuList({ onMenuItemClick }) {
               </ul>
           </div>
 
-          <div className="logout-container row container end">
+            <div className="logout-container row container end">
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 <a href="/">Logout</a>
-          </div>
+            </div>
       </>
   );
 }

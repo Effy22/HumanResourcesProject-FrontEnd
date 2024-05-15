@@ -1,10 +1,13 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import {fetchAddExpenses} from "../../../store/feautures/expensesSlice";
 
-function AddExpenses(){
 
-    const ExpensesType= {
+
+function AddExpenses(){
+    
+
+    const ExpenseType= {
         OFFICE_RENT: 'OFFICE_RENT',
         UTILITIES: 'UTILITIES', 
         OFFICE_SUPPLIES: 'OFFICE_SUPPLIES',
@@ -26,7 +29,7 @@ function AddExpenses(){
         OTHER : 'OTHER'
     }
 
-    const mapExpensesTypeToEnum = (selectedType) => {
+    const mapExpenseTypeToEnum = (selectedType) => {
         switch (selectedType) {
             case 'OFFICE_RENT':
                 return 0;
@@ -70,73 +73,105 @@ function AddExpenses(){
                 return null; 
         }
     };
+  
+ 
 
-    const dispatch= useDispatch();
-    const [expenses, setExpenses] =useState({
-        token: "",
-        amount: 0,
-        expenseType: ExpensesType.OFFICE_RENT,
-        document: "",
-    });
-
-    const takenToken=localStorage.getItem('jwtToken');
-
-    const addExpenses = () => {
-        setExpenses({
-            ...expenses, 
-            token: takenToken,
+  /*  const addExpenses = (token) => {
+        const updatedExpenses = {
+            ...expenses,
+            amount: parseFloat(expenses.amount),
+            token: token,
+        };
+        dispatch(fetchAddExpenses(updatedExpenses))
+            .then(() => {
+                alert('Expense added successfully!');
+            })
+            .catch((error) => {
+                console.error('Expenses eklenirken hata oluştu:', error);
         });
-        dispatch(fetchAddExpenses(expenses));
     }
+
+    const handleExpenseTypeChange = (event) => {
+        setExpenses({
+            ...expenses,
+            expenseType: mapExpenseTypeToEnum(event.target.value),
+        });
+    };*/
+
+    const dispatch = useDispatch();
+    const [expenseType, setExpenseType] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [document,setDocument] = useState('');
+    
+    const token = localStorage.getItem('jwtToken');
+   
+    const handleExpenseTypeChange = (event) => {
+        setExpenseType(mapExpenseTypeToEnum(event.target.value));
+    };
+    const handleAmountChange = (event) => {
+        setAmount(event.target.value);
+    };
+
+    const handleDocumentChange = (event) => {
+        setDocument(event.target.value);
+    };
+    
+
+    const handleAddExpenses = () => {
+        dispatch(fetchAddExpenses({ token, amount, expenseType }))
+          .then(() => {
+            alert('Expense added successfully!');
+          })
+          .catch((error) => {
+            console.error('Error while adding expenses:', error);
+          });
+    };
+
+      
+  
+
 
     return(
     <>
-        <div className="column-addleave">
+        <div className="column-expenses">
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Expenses Type</label>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Expenses Type"
-                        onChange={(evt) => {
-                            setExpenses({
-                                ...expenses,
-                                expenseType: evt.target.value,
-                            });
-                        }}
-                />
+                <label htmlFor="leaveType" className="form-label lbl">Expense Type</label> <br></br>
+                <select
+                        id="expenseType"
+                        className="form-select slct"
+                        value={expenseType}
+                        onChange={handleExpenseTypeChange}
+                        >
+                    <option value="">Select Expense Type</option>
+                    {Object.values(ExpenseType).map((type, index) => (
+                        <option key={index} value={type}>{type}</option>
+                    ))}
+                </select>
             </div>
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Amount</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Amount</label>
                 <input
-                    type="text"
-                    className="form-control"
+                    id='amount'
+                    type="number"
+                    className="form-control inpt"
                     placeholder="Amount"
-                    onChange={(evt) => {
-                        setExpenses({
-                             ...expenses,
-                             amount: evt.target.value,
-                        });
-                    }}
+                    value={amount} 
+                    onChange={handleAmountChange}
                 />
             </div>
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Document</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Document</label>
                 <input
                         type="text"
-                        className="form-control"
+                        className="form-control inpt"
                         placeholder="Document"
-                        onChange={(evt) => {
-                            setExpenses({
-                                ...expenses,
-                                document: evt.target.value,
-                            });
-                        }}
+                        value={document} 
+                        onChange={handleDocumentChange}
                 />
             </div>
             
             <div className="mb-3">
-                <button onClick={addExpenses} type="button" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Add Expenses</button>
+                <button onClick={handleAddExpenses} type="button" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Add Expenses</button>
             </div>
         </div>
         </>

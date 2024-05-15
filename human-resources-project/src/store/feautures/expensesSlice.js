@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import expensesUrl from "../../config/ExpensesController";
+//import ExpensesType from '../../components/organisms/Employee/AddExpenses';
 
 
 const initExpensesState = {
+    data: {},
+    token: '',
+    activeMenuId: 0,
     expensesList: [],
     pendingExpensesList:[],
     isLoadingAddExpenses: false,
@@ -15,14 +19,18 @@ export const fetchAddExpenses = createAsyncThunk (
     'expenses/fetchAddExpenses', 
     async (payload) => {
         try {
-            const result = await fetch(expensesUrl.addExpenses,{
+            console.log('Payload:', payload); 
+            const result = await fetch(`${expensesUrl.addExpenses}?token=${payload.token}`,{
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${payload.token}` 
-                    
+                    'Content-Type': 'application/json'   
                 },
-                body: JSON.stringify(payload) 
+                body: JSON.stringify({
+                    amount: payload.amount,
+                    document: payload.document,
+                    token: payload.token,
+                    expenseType: payload.expenseType  //enumu string olarak gönderecek,ExpensesType[payload.expenseType]  
+                }) 
             }).then(data => data.json()) 
             .then(data =>data);
             return result;
@@ -35,12 +43,12 @@ export const fetchAddExpenses = createAsyncThunk (
 
 export const fetchFindAllExpenses = createAsyncThunk (  
     'expenses/fetchFindAllExpenses', 
-        async (payload) => {
-            const result=  await fetch(expensesUrl.findAllExpenses,{
+        async (token) => {
+            console.log('find all token:', token); 
+            const result=  await fetch(`${expensesUrl.findAllExpenses}?token=${token}`,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Content-Type': 'application/json'
             }
         }).then(data =>data.json())
         .then(data => data);
@@ -52,16 +60,20 @@ export const fetchApproveExpenses= createAsyncThunk (
     'expenses/fetchApproveExpenses', 
     async(payload) => {
         try{
-            const result = await fetch(expensesUrl.approveExpenses,{
+            console.log('Payload:', payload); 
+            const result = await fetch(`${expensesUrl.approveExpenses}?token=${payload.token}`,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                id: payload.expensesId,
+                employeeId: payload.employeeId,
+                token: payload.token
+              })
         }).then(data=>data.json())
         .then(data=>data);
-        return { expensesId: payload, result };
+        return {  expensesId: payload.expensesId, result };
         }catch (error){
             console.log('ERROR: expenses/fetchApproveExpenses...: ', error);
         }
@@ -70,12 +82,11 @@ export const fetchApproveExpenses= createAsyncThunk (
 
 export const fetchFindAllPendingExpenses = createAsyncThunk (  
     'expenses/fetchFindAllPendingExpenses', 
-        async (payload) => {
-            const result=  await fetch(expensesUrl.findAllPendingExpenses,{
+        async (token) => {
+            const result=  await fetch(`${expensesUrl.findAllPendingExpenses}?token=${token}`,{
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Content-Type': 'application/json'
             }
         }).then(data =>data.json())
         .then(data => data);
@@ -88,13 +99,15 @@ export const fetchFindAllPendingExpenses = createAsyncThunk (
 const expensesSlice =createSlice({
     name: 'expenses',
     initialState: initExpensesState,
-    reducers:{},
+    reducers:{
+        setActiveMenuId(state,action) {
+            state.activeMenuId=action.payload;
+         }
+    },
     extraReducers: (build) => {
         build.addCase(fetchAddExpenses.pending, (state) => {state.isLoadingAddExpenses=true;});
         build.addCase(fetchAddExpenses.fulfilled, (state,action) => {
-            state.isLoadingAddExpenses=false;
-            if(action.payload.data){
-                alert("Expenses added successfully")}}
+            state.isLoadingAddExpenses=false;}
         );
         build.addCase(fetchAddExpenses.rejected, (state) => {state.isLoadingAddExpenses=false;});
 
@@ -110,8 +123,8 @@ const expensesSlice =createSlice({
         build.addCase(fetchApproveExpenses.fulfilled, (state,action) => {
             const { expensesId, result } = action.payload;
              state.isLoadingApproveExpenses=false;
-             state.expensesList = state.expensesList.filter(expenses => expenses.id !== expensesId);
-            state.expensesList = [...state.expensesList, result]; //todo: buraya bak eksik!
+             state.pendingExpensesList = state.pendingExpensesList.filter(expenses => expenses.id !== expensesId);
+            state.expensesList = [...state.expensesList, result]; 
         });
         build.addCase(fetchApproveExpenses.rejected, (state) => {
             state.isLoadingApproveExpenses=false;});
@@ -129,5 +142,5 @@ const expensesSlice =createSlice({
 
 
 
-
+export const {setActiveMenuId} = expensesSlice.actions;
 export default expensesSlice.reducer;
