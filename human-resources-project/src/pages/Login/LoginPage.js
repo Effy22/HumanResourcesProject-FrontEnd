@@ -10,6 +10,7 @@ function Login(){
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	
 
 	const navigate = useNavigate();
 
@@ -20,8 +21,10 @@ function Login(){
         if (response.payload && response.payload.data && response.payload.data.token) {
             const token = response.payload.data.token;
 			const email = response.payload.data.email;
+			const id = response.payload.data.id;
             localStorage.setItem('jwtToken', token);
 			localStorage.setItem('email', email);
+			localStorage.setItem('id',id);
 			const gelenRol = response.payload.data.role;
             if (gelenRol === 'MANAGER') {
                 navigate('/manager');

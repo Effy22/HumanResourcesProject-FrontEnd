@@ -3,26 +3,37 @@ import { useDispatch } from 'react-redux';
 import React, {useState, useEffect } from 'react';
 import Header from '../../components/molecules/Employee/Header'
 import MenuList from '../../components/molecules/Employee/MenuList'
-import { fetchChangePassword } from '../../store/feautures/authSlice';
 import UpdateEmplopee from '../../components/organisms/Employee/UpdateEmployee';
 import AddLeave from '../../components/organisms/Employee/AddLeave';
 import FindAllMyLeave from '../../components/organisms/Employee/FindAllMyLeave';
 import { fetchFindAllMyLeaves } from '../../store/feautures/leaveEmployeeSlice';
 import AddExpenses from '../../components/organisms/Employee/AddExpenses';
-
+import ExpensesList from '../../components/organisms/Employee/ExpensesList';
 
 const Employee = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
-  const [findAllMyLeaves, setFindAllMyLeaves] = useState([]);
+  const [allLeaveList, setAllLeaveList] = useState([]);
   
+  const takenToken = localStorage.getItem('jwtToken');
+  
+
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
-    dispatch(fetchChangePassword(token)); 
-  }, [dispatch]);
+    if(takenToken){
+     dispatch(fetchFindAllMyLeaves(takenToken))
+     .then((data) => {
+      dispatch(setAllLeaveList(data.payload));
+      })
+      .catch((error) => {
+        //console.log('Error while fetching data..:',error);
+      });
+ }else{
+     console.log("Token not found in localStorage");
+ }
+}, [dispatch, takenToken]); 
 
   const handleMenuItemClick = (id) => {
-    if (id === 5) {
+    if (id === 7) {
       // Logout işlemi
       localStorage.removeItem('jwtToken'); // JWT token'ı kaldır
       window.location.href = '/'; // Ana sayfaya yönlendir
@@ -41,7 +52,8 @@ const Employee = () => {
   };*/
 
   const handleFindAllMyLeavesClick = async () => {
-    setFindAllMyLeaves(dispatch(fetchFindAllMyLeaves()));
+    const token =localStorage.getItem('jwtToken');
+    setAllLeaveList(dispatch(fetchFindAllMyLeaves(token)));
   } 
 
   
@@ -62,8 +74,10 @@ const Employee = () => {
                   {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                     {menuId === 1 && <UpdateEmplopee/>}
                     {menuId === 2 && <AddLeave/>}
-                    {menuId === 3 && <FindAllMyLeave findAllMyLeave={findAllMyLeaves} onMenuItemClick={handleFindAllMyLeavesClick}/>}
+                    {menuId === 3 && <FindAllMyLeave allLeaveList={allLeaveList} onMenuItemClick={handleFindAllMyLeavesClick}/>}
                     {menuId === 4 && <AddExpenses/>}
+                    {menuId === 5 && <ExpensesList/>}
+
                 </div>
                     
                    

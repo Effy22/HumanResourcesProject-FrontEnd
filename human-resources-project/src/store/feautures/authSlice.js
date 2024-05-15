@@ -129,7 +129,7 @@ export const fetchChangePassword =createAsyncThunk(
 const authSlice = createSlice({
     name: 'auth',
     initialState: initAuthState,
-    reducers: { },
+    reducers: {},
     extraReducers: (builder) =>{
         //registerManager
         builder.addCase(fetchRegisterManager.pending,(state)=>{
@@ -185,6 +185,20 @@ const authSlice = createSlice({
         builder.addCase(fetchFindByToken.rejected,(state)=>{
             state.isLoadingFindByToken=false;
         }); 
+
+        //changePassword
+        builder.addCase(fetchChangePassword.pending,(state) => {
+            state.isLoadingFetchChangePassword =true;
+       });
+       builder.addCase(fetchChangePassword.fulfilled,(state,action) => {
+           state.isLoadingFetchChangePassword =false;
+           console.log("gelen data change password: ",action.payload);
+           state.data = action.payload.data;
+           state.isChangedPassword = true;
+       });
+       builder.addCase(fetchChangePassword.rejected,(state) => {
+           state.isLoadingFetchChangePassword =false;
+        });
 
 
 

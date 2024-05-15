@@ -14,13 +14,12 @@ const initLeaveEmployeeState ={
 // TODO: Bu çalışmazsa bakacağız authorization ekledim.
 export const fetchFindAllMyLeaves =createAsyncThunk(
     'leaveEmployee/fetchFindAllMyLeaves',
-    async(payload) => {
+    async(token) => {
         try{
-             const result= await fetch(leaveEmployeeUrl.findAllMyLeaves,{
+            const result = await fetch(`${leaveEmployeeUrl.findAllMyLeaves}?token=${token}`, {            
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
+                'Content-Type': 'application/json', 
             }
         }).then(data => data.json())
         .then(data => data);
@@ -39,7 +38,6 @@ export const fetchRequestLeave =createAsyncThunk(
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${payload.token}` 
             },
             body: JSON.stringify(payload)
         }).then(data => data.json())
@@ -76,8 +74,12 @@ const leaveEmployeeSlice = createSlice({
         build.addCase(fetchFindAllMyLeaves.pending, (state) => {state.isLoadingAllLeaveList=true;});
         build.addCase(fetchFindAllMyLeaves.fulfilled, (state,action) => {
             state.isLoadingAllLeaveList=false;
-            state.allLeaveList = action.payload.data;}
-        );
+            if(action.payload && action.payload.data){
+            state.allLeaveList = action.payload.data;
+        }else {
+            console.error("fetchFindAllMyLeaves.fulfilled: Geçersiz veya eksik payload");
+        }
+    });
         build.addCase(fetchFindAllMyLeaves.rejected, (state) => {state.isLoadingAllLeaveList=false;});
     }
 

@@ -1,11 +1,12 @@
 import employeeController from "../../config/EmployeeController";
-import { createAsyncThunk, createSlice, isAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 const employeeInitialState = {
     employeeList: [],
     token: '',
     data: {},
+    //leavesList: [],
     isLoadingFetchUpdateEmployee: false,
     isUpdateEmployee: false,
     isLoadingFetchManagerAdminUpdateEmployee: false,

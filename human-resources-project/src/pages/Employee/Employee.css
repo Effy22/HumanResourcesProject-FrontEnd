@@ -116,6 +116,7 @@
   border: 1px solid #ddd;
   padding: 15px;
   text-align: left;
+  margin-top: 50px;
   
 }
 
@@ -132,4 +133,12 @@
 
 .company-table td:last-child {
   text-align: right;
+}
+
+.loadingList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 200px;
 }

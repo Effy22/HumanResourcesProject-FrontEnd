@@ -2,9 +2,18 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAddExpenses } from "../../../store/feautures/expensesSlice";
 
-function AddExpenses(){
+function AddExpenses() {
+    const dispatch = useDispatch();
+    const newToken = useSelector(state => state.auth.token);
 
-    const ExpensesType= {
+    const [expenses, setExpenses] = useState({
+        token: newToken,
+        amount: 0,
+        expenseType: "",
+        document: "",
+    });
+
+    const expensesTypes= {
         OFFICE_RENT: 'OFFICE_RENT',
         UTILITIES: 'UTILITIES', 
         OFFICE_SUPPLIES: 'OFFICE_SUPPLIES',
@@ -23,62 +32,8 @@ function AddExpenses(){
         CONTRACTOR_FEES: 'CONTRACTOR_FEES',
         TAXES: 'TAXES',
         PRINTING: 'PRINTING',
-        OTHER : 'OTHER'
-    }
-
-    const mapExpensesTypeToEnum = (selectedType) => {
-        switch (selectedType) {
-            case 'OFFICE_RENT':
-                return 0;
-            case 'UTILITIES':
-                return 1;
-            case 'OFFICE_SUPPLIES':
-                return 2;
-            case 'EQUIPMENT_MAINTENANCE':
-                return 3;
-            case 'ADVERTISING':
-                return 4;
-            case 'MARKETING':
-                return 5;
-            case 'TRAVEL':
-                return 6;
-            case 'TRAINING':
-                return 7;
-            case 'CONSULTING_FEES':
-                return 8;
-            case 'SOFTWARE_SUBSCRIPTIONS':
-                return 9;
-            case 'HARDWARE_PURCHASE':
-                return 10;
-            case 'INSURANCE':
-                return 11;
-            case 'LEGAL_FEES':
-                return 12;
-            case 'ACCOUNTING_FEES':
-                return 13;
-            case 'EMPLOYEE_SALARIES':
-                return 14;
-            case 'CONTRACTOR_FEES':
-                return 15;
-            case 'TAXES':
-                return 16;
-            case 'PRINTING':
-                return 17;
-            case 'OTHER':
-                return 18;    
-            default:
-                return null; 
-        }
-    };
-
-    const [expenses, setExpenses] = useState({
-        token: newToken,
-        amount: 0,
-        expenseType: ExpensesType.OFFICE_RENT,
-        document: "",
-    });
-
-    const takenToken=localStorage.getItem('jwtToken');
+        OTHER : 'OTHER'
+    }
 
     const addExpenses = () => {
         dispatch(fetchAddExpenses(expenses));
@@ -87,8 +42,8 @@ function AddExpenses(){
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setExpenses({
-            ...expenses, 
-            token: takenToken,
+            ...expenses,
+            [name]: value,
         });
     };
 

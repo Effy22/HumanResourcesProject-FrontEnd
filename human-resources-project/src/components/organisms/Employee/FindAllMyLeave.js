@@ -1,29 +1,34 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFindAllMyLeaves } from '../../../store/feautures/leaveEmployeeSlice';
 
 function FindAllMyLeave(){
     const dispatch = useDispatch();
-    const findAllMyLeaves = useSelector(state => state.leave.findAllMyLeaves);
+    const allLeaveList = useSelector(state => state.leaveEmployee.allLeaveList);
+    console.log("allLeaveList:", allLeaveList);
 
+    /*if (!allLeaveList) {
+      return <div className="loadingList">Loading...</div>;
+    }*/
     return(
         <>
             <div className="rowT">
-        <table className="leave-table">
+        <table className="company-table">
           <thead>
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Leave Type</th>
+              <th scope='col'>Status</th>
             </tr>
           </thead>
           <tbody>
-            {findAllMyLeaves && findAllMyLeaves.map((data, index) => (
+            {allLeaveList.map((data, index) => (
               <tr key={index}>
                 <th scope="row">{data.id}</th>
                 <td>{data.startDate}</td>
                 <td>{data.endDate}</td>
                 <td>{data.leaveType}</td>
+                <td>{data.status}</td>
               </tr>
             ))}
           </tbody>

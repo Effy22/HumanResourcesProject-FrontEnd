@@ -3,14 +3,17 @@ import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { fetchUpdateEmployee } from "../../../store/feautures/employeeSlice";
 
-function UpdateEmplopee({ employeeId, initialEmployee, onUpdate, onClose }) {
+function UpdateEmplopee({ id, initialEmployee, onUpdate }) {
     const dispatch = useDispatch();
+
+    const takenToken=localStorage.getItem('jwtToken');
+    console.log("Retrieved token from localStorage:", takenToken); 
 
     const [updatedEmployee, setUpdatedEmployee] = useState(initialEmployee || {});
 
     useEffect(() => {
-        setUpdatedEmployee({ ...initialEmployee, id: employeeId });
-    }, [initialEmployee, employeeId]);
+        setUpdatedEmployee({ ...initialEmployee, id: id });
+    }, [initialEmployee, id]);
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,13 +24,15 @@ function UpdateEmplopee({ employeeId, initialEmployee, onUpdate, onClose }) {
         e.preventDefault();
         onUpdate(updatedEmployee);
         dispatch(fetchUpdateEmployee(updatedEmployee));
-        //onClose();
+        
     };
     
 
     const update = () => {
+        setUpdatedEmployee({ ...initialEmployee, id: id });
+        setUpdatedEmployee({ ...initialEmployee, token: takenToken });
         dispatch(fetchUpdateEmployee(updatedEmployee));
-        //onClose();
+        
     };
 
     return (

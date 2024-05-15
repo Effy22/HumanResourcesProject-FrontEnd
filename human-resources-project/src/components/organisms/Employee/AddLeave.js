@@ -1,6 +1,8 @@
-import { useState, useSelector } from "react";
+import React,{ useState } from "react";
 import { useDispatch } from "react-redux";
 import {fetchRequestLeave} from "../../../store/feautures/leaveEmployeeSlice";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function AddLeave(){
     const dispatch= useDispatch();
@@ -22,71 +24,103 @@ function AddLeave(){
         WORK_FROM_HOME: "WORK_FROM_HOME",
         FURLOUGH: "FURLOUGH"
     };
+
+    const mapLeaveTypeToEnum = (selectedType) => {
+        switch (selectedType) {
+            case "ANNUAL_LEAVE":
+                return 0;
+            case "SICK_LEAVE":
+                return 1;
+            case "UNPAID_LEAVE":
+                return 2;
+            case "FAMILY_LEAVE":
+                return 3;
+            case "HALF_DAY_LEAVE":
+                return 4;
+            case "COMPASSIONATE_LEAVE":
+                return 5;
+            case "WORK_FROM_HOME":
+                return 6;
+            case "FURLOUGH":
+                return 7;
+            default:
+                return null; 
+        }
+    };
     
 
-    //const newToken = useSelector(state => state.auth.token);
+    const takenToken = localStorage.getItem('jwtToken');
+    const [startDateNew, setStartDateNew] = useState(new Date());
+    const [endDateNew, setEndDateNew] = useState(new Date());
 
     const requestLeave = () => {
         setLeave({
-            ...leave, 
-            //token: newToken,
+            ...leave,
+            startDate: startDateNew,
+            endDate: endDateNew, 
+            token: takenToken,
         });
-        dispatch(fetchRequestLeave(leave));
-    }
+        dispatch(fetchRequestLeave(leave))
+        .then(() => {
+            console.log('token geldi mi addLeave dispatch sonrası?', takenToken);
+            alert('İzin başarıyla eklendi');
+        })
+        .catch((error) => {
+            console.error('İzin eklenirken hata oluştu:', error);
+            alert('İzin eklenirken bir hata oluştu');
+        });
+    };
+
+    const handleLeaveTypeChange = (event) => {
+        setLeave({
+            ...leave,
+            leaveType: mapLeaveTypeToEnum(event.target.value),
+        });
+    };
 
     return(
     <>
         <div className="column-addleave">
-            <div className="mb-3">
+        <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>Start Date</label>
-                <input
-                        type="date"
-                        className="form-control"
-                        placeholder="Start Date"
-                        onChange={(evt) => {
-                            setLeave({
-                                ...leave,
-                                startDate: evt.target.value,
-                            });
-                        }}
+                <ReactDatePicker
+                    selected={startDateNew}
+                    onChange={(date) => {
+                        const formattedDate = date.toISOString().split('T')[0];
+                        setStartDateNew(formattedDate);
+                    }}
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control"
                 />
+
             </div>
             <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>End Date</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    placeholder="End Date"
-                    onChange={(evt) => { 
-                        setLeave({
-                            ...leave,
-                            endDate: evt.target.value,
-                        });
+                <ReactDatePicker
+                    selected={endDateNew}
+                    onChange={(date) => {
+                        const formattedDate = date.toISOString().split('T')[0];
+                        setEndDateNew(formattedDate);
                     }}
+                    dateFormat="dd/MM/yyyy"
+                    className="form-control"
                 />
+
             </div>
+
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Leave Type</label>
-                <select
-                    className="form-control"
-                    onChange={(evt) => {
-                        setLeave({
-                            ...leave,
-                            leaveType: evt.target.value,
-                        });
-                    }}
-                >
-                    <option value="">Select Leave Type</option>
-                    <option value={LeaveTypes.ANNUAL_LEAVE}>Annual Leave</option>
-                    <option value={LeaveTypes.SICK_LEAVE}>Sick Leave</option>
-                    <option value={LeaveTypes.UNPAID_LEAVE}>Unpaid Leave</option>
-                    <option value={LeaveTypes.FAMILY_LEAVE}>Family Leave</option>
-                    <option value={LeaveTypes.HALF_DAY_LEAVE}>Half Day Leave</option>
-                    <option value={LeaveTypes.COMPASSIONATE_LEAVE}>Compassionate Leave</option>
-                    <option value={LeaveTypes.WORK_FROM_HOME}>Work From Home</option>
-                    <option value={LeaveTypes.FURLOUGH}>Furlough</option>
-                </select>
-            </div>
+                <label htmlFor="leaveType" className="form-label">Leave Type</label>
+                    <select
+                    id="leaveType"
+                    className="form-select"
+                    value={leave.leaveType}
+                    onChange={handleLeaveTypeChange}
+                    >
+                    {Object.values(LeaveTypes).map((type, index) => (
+                        <option key={index} value={type}>{type}</option>
+                    ))}
+                    </select>
+             </div>
 
             <div className="mb-3">
                 <label className="form-label" style={{ display: 'block' }}>Document</label>
@@ -103,10 +137,10 @@ function AddLeave(){
                 />
             </div>
 
-            <input onClick={requestLeave} type="button" value="Request Leave" className="btn solid" />
+            <button onClick={requestLeave} type="button" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Add Leave</button>
         </div>
     </>
     )
 };
 
-export default AddLeave;
+export default React.memo(AddLeave);
