@@ -23,6 +23,9 @@ function UpdateList (){
 
   return (
     <>
+    {isUpdateCompanyOpen ? (
+        <UpdateCompany companyId={initialCompany.id} initialCompany={initialCompany} onClose={handleUpdateCompanyClose} />
+      ) : (
       <div className="rowT">
         <table className="company-table">
           <thead>
@@ -47,7 +50,7 @@ function UpdateList (){
           </tbody>
         </table>
       </div>
-      {isUpdateCompanyOpen && <UpdateCompany companyId={initialCompany.id} initialCompany={initialCompany} onClose={handleUpdateCompanyClose} />}
+    )}
     </>
   );
 }

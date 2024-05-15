@@ -1,7 +1,7 @@
 import { useSelector} from "react-redux";
 import { useDispatch} from 'react-redux';
 import { fetchApproveCompany, fetchRejectCompany } from '../../../store/feautures/companySlice'
-import { useState } from "react";
+
 
 
 function CompanyApplingList (){
@@ -9,19 +9,15 @@ function CompanyApplingList (){
   const companyApplingList= useSelector(state => state.company.companyApplingList);
 
   const token=localStorage.getItem('jwtToken');
-  console.log("Retrieved token from localStorage:", token); 
 
   const handleApprove = (companyId) => {
-    console.log("Approving company with ID:", companyId, "and token:", token); 
     dispatch(fetchApproveCompany({ token, id: companyId })); 
     console.log("Şirket onaylandı:", companyId);
   };
   
   const handleReject = (companyId) => {
-    console.log("Rejecting company with ID:", companyId, "and token:", token); 
     dispatch(fetchRejectCompany({ token, id: companyId })); 
     console.log("Şirket reddedildi:", companyId);
-
   };
 
     return(

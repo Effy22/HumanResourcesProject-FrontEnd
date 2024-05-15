@@ -1,15 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchApproveExpenses } from "../../../store/feautures/expensesSlice";
 
+
 function ApproveExpenses (){
 
     const dispatch =useDispatch();
     const pendingExpensesList = useSelector(state => state.expenses.pendingExpensesList);
 
-    const handleApprove = (expensesId) => {
-        dispatch(fetchApproveExpenses(expensesId));
+    const token=localStorage.getItem('jwtToken');
+
+    const handleApprove = (expensesId, employeeId) => {
+        console.log("Approveexpenses.js token...: ", token);
+        if(token){
+            dispatch(fetchApproveExpenses({ expensesId, employeeId, token }));
         console.log("Expenses onaylandı:", expensesId);
-    }
+        }else{
+            console.error("Token bulunamadı!");
+        }  
+    };
+
+
+
 
     return(
     <>
@@ -22,27 +33,21 @@ function ApproveExpenses (){
                     <th scope="col">Manager-ID</th>
                     <th scope="col">Expenses Type</th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Document</th>
-                    <th scope="col">Request Date</th>
-                    <th scope="col">Approval Date</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                     </tr>
-                </thead>
-            <tbody>
+            </thead>
+                 <tbody>
                     {pendingExpensesList.map((expenses, index) => (
                     <tr key={index}>
-                        <th scope="row">{p.id}</th>
+                        <th scope="row">{expenses.id}</th>
                         <td>{expenses.employeeId}</td>
                         <td>{expenses.managerId}</td>
                         <td>{expenses.expensesType}</td>
                         <td>{expenses.amount}</td>
-                        <td>{expenses.document}</td>
-                        <td>{expenses.requestDate}</td>
-                        <td>{expenses.approvalDate}</td>
                         <td>{expenses.status}</td>
                         <td>
-                            <button onClick={() => handleApprove(expenses.id)}>Approve</button>
+                            <button onClick={() => handleApprove(expenses.id, expenses.employeeId)}>Approve</button>
                         </td>
                     </tr>
                     ))}

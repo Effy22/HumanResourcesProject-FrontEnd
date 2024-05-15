@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState} from 'react';
 import './Register.css';
 import authController from '../../config/AuthController';
+import { useNavigate } from 'react-router-dom';
 
 
 function Register(){
@@ -8,7 +9,8 @@ function Register(){
     const sign_in_btn = useRef(null);
     const sign_up_btn = useRef(null);
     const container = useRef(null);
-
+    const navigate = useNavigate();
+    
     const [name,setName] = useState('');
     const [surname,setSurname] = useState('');
     const [email,setEmail] = useState('');
@@ -40,11 +42,12 @@ function Register(){
             })
         }).then(data=> data.json())
         .then(data=>{
-            console.log(data);
-        })
+            console.log(data); })
         .catch(error => {
             console.error('Hata:', error);
         });
+
+        window.location.href = '/'; 
     } 
     useEffect(() => {
         const signInBtn = sign_in_btn.current;

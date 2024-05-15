@@ -16,9 +16,9 @@ function MenuList({ onMenuItemClick }) {
   const menuList = [
     { id: 0, label: " Employee Register", icon: faPersonCirclePlus },
     { id: 1, label: " Employee List", icon: faPeopleGroup },
-    { id: 2, label: " Update Company", icon: faBuilding },
-    { id: 3, label: " Add Permission To Employee", icon: faPlane },
-    { id: 4, label: " See Pending Leaves List", icon: faPeopleGroup },
+    { id: 2, label: " Add Permission To Employee", icon: faPlane },
+    { id: 3, label: " See Pending Leaves List", icon: faPeopleGroup },
+    { id: 4, label: " Approve Employee Expenses", icon: faPeopleGroup },
     { id: 5, label: " Logout", icon: faArrowRightFromBracket },
 
   ];

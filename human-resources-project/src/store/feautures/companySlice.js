@@ -16,7 +16,6 @@ const initCompanyState = {
     isLoadingCompanyCount: false  
 }
 
-
 export const fetchViewCompanies =createAsyncThunk(
     'company/fetchViewCompanies',
     async(token) => {
@@ -24,6 +23,7 @@ export const fetchViewCompanies =createAsyncThunk(
             const result= await fetch(`${companyUrl.viewCompanies}?token=${token}`,{
             method: 'GET',
             headers: {
+
                 'Content-Type': 'application/json',
             }
         });
@@ -94,7 +94,7 @@ export const fetchUpdateCompany = createAsyncThunk(
     async(payload) => {
         try{
             const result = await fetch(`${companyUrl.updateCompany}?token=${payload.token}`,{
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -156,12 +156,6 @@ const companySlice = createSlice({
              state.isLoadingApproveCompany=false;
              state.companyApplingList = state.companyApplingList.filter(company => company.id !== companyId);
               state.companyList = [...state.companyList, result];
-            if(action.payload.status===200){
-                //state.companyApplingList=action.payload.data; //bunu ekledim doğru mu?
-                //state.companyList=action.payload.data; // ve bu doğru mu? listelerde approve olunca güncellensin istedim.
-            }
-    
-        
         });
             
         build.addCase(fetchApproveCompany.rejected, (state) => {

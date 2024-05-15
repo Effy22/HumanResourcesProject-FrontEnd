@@ -4,46 +4,12 @@ import { useEffect } from 'react';
 import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
 
- /* const [company, setCompany] = useState({
-    id: "",
-    managerId: "",
-    name: "",
-    title: "",
-    description: "",
-    address: "",
-    phone: "",
-    email: "",
-    website: "",
-    logo: "",
-    sector: "",
-    taxNumber: "",
-    taxOffice: "",
-    mersisNo: "",
-    vision: "",
-    mission: "",
-    country: "",
-    city: "",
-    employeeCount: "",
-    founded: "",
-    foundingYear: "",
-    linkedin: "",
-    membershipPlan: "",
-    status: ""
-  });
-
-  const update = () => {
-    setCompany({
-        ...company
-    });
-    dispatch(fetchUpdateCompany(company));
-  }; */
-
-
   function UpdateCompany({ companyId, initialCompany, onUpdate, onClose }) {
     const dispatch = useDispatch();
-    
 
     const [updatedCompany, setUpdatedCompany] = useState(initialCompany || {});
+
+    const token=localStorage.getItem('jwtToken');
 
     useEffect(() => {
         setUpdatedCompany({ ...initialCompany, id: companyId });
@@ -54,10 +20,10 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
         setUpdatedCompany({ ...updatedCompany, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (companyId) => {
+    
         onUpdate(updatedCompany);
-        dispatch(fetchUpdateCompany(updatedCompany));
+        dispatch(fetchUpdateCompany({ token, id: companyId }));
     };
 
     const update = () => {
@@ -73,12 +39,12 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
     <h2>Update Company</h2>
       <form onSubmit={handleSubmit}>
-        <div className="column-addleave">
+        <div className="column-update">
         <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>ID</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>ID</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Name"
                     value={updatedCompany.id || ''}
                     onChange={handleChange}
@@ -86,54 +52,54 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
             </div>
     
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Name</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Name</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Name"
                     value={updatedCompany.name || ''}
                     onChange={handleChange}
                 />
             </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Tittle</label>
+
+             <div className="mb-3">
+                <label className="form-label lbl " style={{ display: 'block' }}>Tax Number</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
+                    placeholder="Tax Number"
+                    value={updatedCompany.taxNumber}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label lbl" style={{ display: 'block' }}>Tittle</label>
+                <input
+                    type="text"
+                    className="form-control inpt"
                     placeholder="Tittle"
                     value={updatedCompany.title}
                     onChange={handleChange}
                 />
             </div>
 
-
-
-
+           
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Description</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Address</label>
                 <input
                     type="text"
-                    className="form-control"
-                    placeholder="Identity Number"
-                    value={updatedCompany.description}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Address</label>
-                <input
-                    type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Address"
                     value={updatedCompany.address}
                     onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Phone Number</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Phone Number</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Phone Number"
                     value={updatedCompany.phone}
                     onChange={handleChange}
@@ -142,10 +108,10 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
             
 
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>E-Mail</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>E-Mail</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="E-Mail"
                     value={updatedCompany.email}
                     onChange={handleChange}
@@ -153,10 +119,10 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
             </div>
 
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Web Site</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Web Site</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Web Site"
                     value={updatedCompany.website}
                     onChange={handleChange}
@@ -164,20 +130,20 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
             </div>
 
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Logo</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Employee Count</label>
                 <input
                     type="text"
-                    className="form-control"
-                    placeholder="Logo"
-                    value={updatedCompany.logo}
+                    className="form-control inpt"
+                    placeholder="Employee Count"
+                    value={updatedCompany.employeeCount}
                     onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
-                <label className="form-label" style={{ display: 'block' }}>Sector</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Sector</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control inpt"
                     placeholder="Sector"
                     value={updatedCompany.sector}
                     onChange={handleChange}

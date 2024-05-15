@@ -5,7 +5,8 @@ import Header from '../../components/molecules/Company/Header';
 import CompanyList from '../../components/organisms/Company/CompanyList';
 import CompanyApplingList from '../../components/organisms/Company/CompanyApplingList';
 import MenuList from '../../components/molecules/Company/MenuList';
-import {fetchViewCompanies, fetchViewCompaniesAppling } from '../../store/feautures/companySlice';
+import {fetchViewCompanies, fetchViewCompaniesAppling, fetchUpdateCompany, fetchApproveCompany, fetchRejectCompany } from '../../store/feautures/companySlice';
+import UpdateCompanyList from "../../components/organisms/Company/UpdateCompanyList";
 import './Company.css';
 
 
@@ -15,6 +16,8 @@ function Company() {
     const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
     const [companyList, setCompanyList] = useState([]);
     const [companyApplingList, setCompanyApplingList] = useState([]);
+    const [updateCompanyList, setUpdateCompanyList] = useState([]);
+    
 
     const takenToken = localStorage.getItem('jwtToken');
 
@@ -22,6 +25,9 @@ function Company() {
         if(takenToken){
              dispatch(fetchViewCompanies(takenToken));
             dispatch(fetchViewCompaniesAppling(takenToken));
+            dispatch(fetchApproveCompany(takenToken));
+            dispatch(fetchRejectCompany(takenToken));
+            dispatch(fetchUpdateCompany(takenToken));
         }else{
             console.log("Token not found in localStorage");
         }
@@ -29,7 +35,7 @@ function Company() {
 
     // Menü öğesine tıklandığında tetiklenecek fonksiyon
     const handleMenuItemClick = (id) => {
-        if(id==3){
+        if(id===4){
             localStorage.removeItem('jwtToken');
             window.location.href= '/';
         }else{
@@ -46,6 +52,10 @@ function Company() {
         const token =localStorage.getItem('jwtToken');
         setCompanyApplingList(dispatch(fetchViewCompaniesAppling(token)));
     };
+    const handleUpdateCompanyClick = async () => {
+        const token = localStorage.getItem('jwtToken');
+        setUpdateCompanyList(dispatch(fetchUpdateCompany(token)));
+      };
 
     return (
         <>
@@ -63,6 +73,7 @@ function Company() {
                         {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                         {menuId === 0 && <CompanyList companyList={companyList} onMenuItemClick ={handleViewCompaniesClick} />}
                         {menuId === 1 && <CompanyApplingList companyApplingList={companyApplingList} onMenuItemClick={handleViewCompaniesApplingClick} />}
+                        {menuId === 2 && <UpdateCompanyList updateCompanyList={updateCompanyList} onMenuItemClick={handleUpdateCompanyClick} />}
                     </div>
                 </div>
             </div> 

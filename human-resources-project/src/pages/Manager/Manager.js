@@ -1,30 +1,30 @@
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import React, {useState, useEffect } from 'react';
 import './Manager.css'
 import Header from '../../components/molecules/Manager/Header'
 import MenuList from '../../components/molecules/Manager/MenuList'
 import { fetchGetAllPendingLeavesOfEmployees } from '../../store/feautures/leaveManagerSlice';
-import {fetchUpdateCompany } from '../../store/feautures/companySlice';
+import {fetchApproveExpenses, fetchFindAllPendingExpenses } from '../../store/feautures/expensesSlice';
 import PendingLeaveList from '../../components/organisms/Manager/PendingLeaveList';
 import AddLeaveForEmployee from '../../components/organisms/Manager/AddLeaveForEmployee';
 import AddEmployee from '../../components/organisms/Manager/AddEmployee';
 import EmployeeList from '../../components/organisms/Manager/EmployeeList';
-import UpdateCompanyList from "../../components/organisms/Manager/UpdateCompanyList";
+import ApproveExpenses from '../../components/organisms/Manager/ApproveExpenses'; 
 
 
 const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
-  const [updateCompanyList, setUpdateCompanyList] = useState([]);
-  const [employeeList, setEmployeeList] = useState([]);
+  const [pendingExpensesList, setPendingExpensesList] =useState([]);
   
   
   const takenToken = localStorage.getItem('jwtToken');
 useEffect(() => {  
   if (takenToken) {
     dispatch(fetchGetAllPendingLeavesOfEmployees(takenToken)); 
-    dispatch(fetchUpdateCompany(takenToken));
+    dispatch(fetchFindAllPendingExpenses(takenToken));
+    dispatch(fetchApproveExpenses(takenToken));
   } else {
     // Token yoksa yapılacak işlemleri buraya ekleyebilirsiniz.
     console.log('Token not found in localStorage');
@@ -35,22 +35,20 @@ useEffect(() => {
     if (id === 5) {
       localStorage.removeItem('jwtToken'); 
       window.location.href = '/'; 
-    } else if (id === 2) {
-      window.location.href = '/company'; 
     } else {
       setMenuId(id);
     }
   };
 
-  const handleUpdateCompanyClick = async () => {
-    const token = localStorage.getItem('jwtToken');
-    setUpdateCompanyList(dispatch(fetchUpdateCompany(token)));
-  };
+
   const handleViewPendingLeavesClick = async () => {
     const token = localStorage.getItem('jwtToken');
     setPendingLeaveList(dispatch(fetchGetAllPendingLeavesOfEmployees(token)));
   };
-  
+  const handleApproveExpensesClick = async () => {
+    const token = localStorage.getItem('jwtToken');
+    setPendingExpensesList(dispatch(fetchFindAllPendingExpenses(token)));
+  };
 
   return (
     <>
@@ -66,10 +64,9 @@ useEffect(() => {
                     {/* Seçilen menüye göre ekranda görüntülenecek bileşen */}
                     {menuId === 0 && <AddEmployee />}
                     {menuId === 1 && <EmployeeList />}
-                    {menuId === 2 && <UpdateCompanyList updateCompanyList={updateCompanyList} onMenuItemClick={handleUpdateCompanyClick} />}
-                    {menuId === 3 && <AddLeaveForEmployee/>}
-                    {menuId === 4 && <PendingLeaveList pendingLeaveList={pendingLeaveList} onMenuItemClick ={handleViewPendingLeavesClick} />}
-                    
+                    {menuId === 2 && <AddLeaveForEmployee/>}
+                    {menuId === 3 && <PendingLeaveList pendingLeaveList={pendingLeaveList} onMenuItemClick ={handleViewPendingLeavesClick} />}
+                    {menuId === 4 && <ApproveExpenses pendingExpensesList={pendingExpensesList} onMenuItemClick ={handleApproveExpensesClick} />}
                    
                   </div>
             <div>
@@ -81,4 +78,4 @@ useEffect(() => {
   )
 }
 
-export default Manager
+export default Manager;
