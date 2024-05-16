@@ -100,7 +100,7 @@ function AddExpenses(){
     const dispatch = useDispatch();
     const [expenseType, setExpenseType] = useState('');
     const [amount, setAmount] = useState(0);
-    const [document,setDocument] = useState('');
+    const [description,setDescription] = useState('');
     
     const token = localStorage.getItem('jwtToken');
    
@@ -111,13 +111,13 @@ function AddExpenses(){
         setAmount(event.target.value);
     };
 
-    const handleDocumentChange = (event) => {
-        setDocument(event.target.value);
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
     };
     
 
     const handleAddExpenses = () => {
-        dispatch(fetchAddExpenses({ token, amount, expenseType }))
+        dispatch(fetchAddExpenses({ token, amount, expenseType, description }))
           .then(() => {
             alert('Expense added successfully!');
           })
@@ -159,13 +159,13 @@ function AddExpenses(){
                 />
             </div>
             <div className="mb-3">
-                <label className="form-label lbl" style={{ display: 'block' }}>Document</label>
+                <label className="form-label lbl" style={{ display: 'block' }}>Description</label>
                 <input
                         type="text"
                         className="form-control inpt"
-                        placeholder="Document"
-                        value={document} 
-                        onChange={handleDocumentChange}
+                        placeholder="Description"
+                        value={description} 
+                        onChange={handleDescriptionChange}
                 />
             </div>
             

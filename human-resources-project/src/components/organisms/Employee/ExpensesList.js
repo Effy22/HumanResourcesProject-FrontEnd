@@ -16,7 +16,7 @@ function ExpensesList (){
                     <th scope="col">Manager-ID</th>
                     <th scope="col">Expenses Type</th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Document</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Request Date</th>
                     <th scope="col">Approval Date</th>
                     <th scope="col">Status</th>

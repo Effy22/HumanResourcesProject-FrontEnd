@@ -9,7 +9,6 @@ function Header () {
     <header className="header">
       <div className="logo-container" onClick={() => alert("Menu opened!")}>
         <img src={logo} alt="Logo" />
-        <label className="logo-labels">Workforce Solutions</label>
       </div>
        <div>
          <ProfileCard />

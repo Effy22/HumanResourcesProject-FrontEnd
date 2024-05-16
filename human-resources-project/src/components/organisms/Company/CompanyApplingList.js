@@ -43,8 +43,8 @@ function CompanyApplingList (){
                         <td>{company.taxNumber}</td>
                         <td>{company.status}</td>
                         <td> 
-                          <button onClick={() => handleApprove(company.id)}>Approve</button>
-                          <button onClick={() => handleReject(company.id)}>Reject</button>
+                          <button onClick={() => handleApprove(company.id)} className="btn-app">Approve</button>
+                          <button onClick={() => handleReject(company.id)} className="btn-app">Reject</button>
                         </td>
                       </tr>
                     ))}

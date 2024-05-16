@@ -126,7 +126,7 @@ function Register(){
                                     setTaxNumber(evt.target.value); }} type="text" placeholder="Tax Number" />
                             </div>
 
-                            <input onClick={register} type="button" value="Get an Offer" className="btn solid" />
+                            <input onClick={register} type="button" value="Get an Offer" className="btn-rg" />
                             
                         </form>
                         

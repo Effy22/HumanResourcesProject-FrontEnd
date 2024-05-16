@@ -55,7 +55,7 @@ function Login(){
 								<i className="fas fa-lock"></i>
 								<input onChange={(evt) => {setPassword(evt.target.value)}} type="password" placeholder="Password" />
 							</div>
-							<input onClick={login} type="button" value="Login" className="btn solid" />
+							<input onClick={login} type="button" value="Login" className="btn-login" />
 							
 						</form>
 
@@ -66,12 +66,12 @@ function Login(){
 				<div className="panels-container">
 					<div className="panel left-panel">
 						<div className="content">
-							<h3>New to our community ?</h3>
-							<p>
+							<h3 className='cnt'>New to our community ?</h3>
+							<p className='cnt-p'>
 							Workforce Solutions offers opportunities as a platform specialized in human 
 							resources management! Join now and take part in a dynamic environment!
 							</p>
-							<button  onClick={() => { window.location.href = '/register'; }}className="btn transparent" id="sign-up-btn">
+							<button  onClick={() => { window.location.href = '/register'; }}className="btn-login" id="sign-up-btn">
 								Register
 							</button>
 						</div>

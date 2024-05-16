@@ -27,7 +27,7 @@ export const fetchAddExpenses = createAsyncThunk (
                 },
                 body: JSON.stringify({
                     amount: payload.amount,
-                    document: payload.document,
+                    description: payload.description,
                     token: payload.token,
                     expenseType: payload.expenseType  //enumu string olarak gönderecek,ExpensesType[payload.expenseType]  
                 }) 

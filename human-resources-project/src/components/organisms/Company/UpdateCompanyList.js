@@ -43,7 +43,7 @@ function UpdateList (){
                 <td>{data.name}</td>
                 <td>{data.taxNumber}</td>
                 <td>
-                  <button onClick={() => handleUpdateButtonClick(data.id)} className="btn btn-primary">Update</button>
+                  <button onClick={() => handleUpdateButtonClick(data.id)} className="btn-app">Update</button>
                 </td>
               </tr>
             ))}

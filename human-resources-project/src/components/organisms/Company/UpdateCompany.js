@@ -169,7 +169,7 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
 
             <div className="mb-3">
-                <button  type="submit" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Update</button>
+                <button  type="submit" className="btn-app wh" style={{ display: 'block', width: '100%' }}>Update</button>
             </div>
         </div>
 

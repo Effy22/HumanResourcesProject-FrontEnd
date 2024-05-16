@@ -77,7 +77,7 @@ form.sign-in-form:hover {
 
 .btn {
   width: 150px;
-  background-color: #8e00fb;
+  background-color: #1a1e75;
   border: none;
   outline: none;
   height: 49px;
@@ -118,6 +118,27 @@ form.sign-in-form:hover {
 .custom-button:hover {
   background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
   color: var(--maviton4);
+}
+
+.btn-rg{
+  background-color:#1a1e75;
+  color: #fff ;
+  width: 150px;
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.btn-rg:hover{
+  background-color: var(--maviton2); /* Hover durumunda arkaplan rengi değişecek */
+  color: var(--maviton4);
+
 }
 
 

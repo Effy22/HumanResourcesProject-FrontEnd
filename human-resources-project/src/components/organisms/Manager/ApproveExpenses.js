@@ -33,6 +33,7 @@ function ApproveExpenses (){
                     <th scope="col">Manager-ID</th>
                     <th scope="col">Expenses Type</th>
                     <th scope="col">Amount</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                     </tr>
@@ -45,6 +46,7 @@ function ApproveExpenses (){
                         <td>{expenses.managerId}</td>
                         <td>{expenses.expensesType}</td>
                         <td>{expenses.amount}</td>
+                        <td>{expenses.description}</td>
                         <td>{expenses.status}</td>
                         <td>
                             <button onClick={() => handleApprove(expenses.id, expenses.employeeId)}>Approve</button>
