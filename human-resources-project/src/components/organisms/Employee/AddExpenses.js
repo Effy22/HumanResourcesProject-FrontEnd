@@ -6,7 +6,6 @@ import {fetchAddExpenses} from "../../../store/feautures/expensesSlice";
 
 function AddExpenses(){
     
-
     const ExpenseType= {
         OFFICE_RENT: 'OFFICE_RENT',
         UTILITIES: 'UTILITIES', 

@@ -41,6 +41,11 @@
   padding-top: 20px;
 }
 
+.btn-company{
+  background-color: #2e48a7;
+}
+
+
 .btn:hover{
   background-color: #3e54a3;
 }
@@ -137,7 +142,6 @@
 .company-table {
   border-collapse: collapse;
   width: 100%;
-  margin-top: 25px;
  
 }
 
@@ -146,6 +150,7 @@
   border: 1px solid #ddd;
   padding: 15px;
   text-align: left;
+  font-size: 14px;
   
 }
 
@@ -153,7 +158,7 @@
   background-color: #f2f2f2;
   font-weight: bold;
   font-size: 14px;
-  width: 40%;
+  width: 30%;
 }
 
 
@@ -163,4 +168,13 @@
 
 .company-table td:last-child {
   text-align: right;
+}
+.ct-list{
+  margin-top: 5px;
+  margin-left: 250px;
+}
+
+.ct-list-top{
+  margin-top: 17px;
+
 }

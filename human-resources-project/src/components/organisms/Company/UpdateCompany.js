@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
 
-  function UpdateCompany({ companyId, initialCompany, onUpdate, onClose }) {
+  function UpdateCompany({ companyId, initialCompany, onUpdate = () => {}, onClose }) {
     const dispatch = useDispatch();
 
     const [updatedCompany, setUpdatedCompany] = useState(initialCompany || {});
@@ -20,16 +20,22 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
         setUpdatedCompany({ ...updatedCompany, [name]: value });
     };
 
-    const handleSubmit = (companyId) => {
-    
-        onUpdate(updatedCompany);
-        dispatch(fetchUpdateCompany({ token, id: companyId }));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(fetchUpdateCompany({ ...updatedCompany, token }))
+            .then(() => {
+                onUpdate(updatedCompany);
+                onClose();
+            })
+            .catch((error) => {
+                console.error('Error updating company:', error);
+            });
     };
 
-    const update = () => {
+   /* const update = () => {
         dispatch(fetchUpdateCompany(updatedCompany));
         onClose(); // Güncelleme işlemi tamamlandığında pencereyi kapat
-    };
+    };   onClick={update} */
 
 
 
@@ -45,7 +51,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                 <input
                     type="text"
                     className="form-control inpt"
-                    placeholder="Name"
+                    placeholder="ID"
+                    name="id"
                     value={updatedCompany.id || ''}
                     onChange={handleChange}
                 />
@@ -57,6 +64,7 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Name"
+                    name="name"
                     value={updatedCompany.name || ''}
                     onChange={handleChange}
                 />
@@ -68,7 +76,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Tax Number"
-                    value={updatedCompany.taxNumber}
+                    name="taxNumber"
+                    value={updatedCompany.taxNumber || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -79,7 +88,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Tittle"
-                    value={updatedCompany.title}
+                    name="title"
+                    value={updatedCompany.title || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -91,7 +101,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Address"
-                    value={updatedCompany.address}
+                    name="address"
+                    value={updatedCompany.address || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -101,7 +112,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Phone Number"
-                    value={updatedCompany.phone}
+                    name="phone"
+                    value={updatedCompany.phone || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -113,7 +125,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="E-Mail"
-                    value={updatedCompany.email}
+                    name="email"
+                    value={updatedCompany.email || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -124,7 +137,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Web Site"
-                    value={updatedCompany.website}
+                    name="website"
+                    value={updatedCompany.website || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -135,7 +149,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                     type="text"
                     className="form-control inpt"
                     placeholder="Employee Count"
-                    value={updatedCompany.employeeCount}
+                    name="employeeCount"
+                    value={updatedCompany.employeeCount || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -144,8 +159,8 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
                 <input
                     type="text"
                     className="form-control inpt"
-                    placeholder="Sector"
-                    value={updatedCompany.sector}
+                    name="sector"
+                    value={updatedCompany.sector || ''}
                     onChange={handleChange}
                 />
             </div>
@@ -154,7 +169,7 @@ import { fetchUpdateCompany } from "../../../store/feautures/companySlice";
 
 
             <div className="mb-3">
-                <button onClick={update} type="button" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Update</button>
+                <button  type="submit" className="btn btn-success" style={{ display: 'block', width: '100%' }}>Update</button>
             </div>
         </div>
 

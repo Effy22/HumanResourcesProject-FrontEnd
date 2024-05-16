@@ -165,14 +165,12 @@ const companySlice = createSlice({
         build.addCase(fetchRejectCompany.fulfilled, (state,action) => {
             const { companyId } = action.payload;
             state.isLoadingRejectCompany=false;
-            state.companyApplingList = state.companyApplingList.filter(company => company.id !== companyId);
-            console.log(action.payload);});
+            state.companyApplingList = state.companyApplingList.filter(company => company.id !== companyId);});
         build.addCase(fetchRejectCompany.rejected, (state) => {state.isLoadingRejectCompany=false;});
 
         build.addCase(fetchUpdateCompany.pending, (state) => {state.isLoadingUpdateCompany=true;});
         build.addCase(fetchUpdateCompany.fulfilled, (state,action) => {
             state.isLoadingUpdateCompany=false;
-            console.log(action.payload);
             const updatedCompany = action.payload;
 
              // Şirket bilgilerini güncelleme
@@ -190,8 +188,7 @@ const companySlice = createSlice({
 
         build.addCase(fetchCompanyCount.pending, (state) => {state.isLoadingCompanyCount=true;});
         build.addCase(fetchCompanyCount.fulfilled, (state,action) => {
-            state.isLoadingCompanyCount=false;
-            console.log(action.payload);});
+            state.isLoadingCompanyCount=false;});
         build.addCase(fetchCompanyCount.rejected, (state) => {state.isLoadingCompanyCount=false;});
     }
 });

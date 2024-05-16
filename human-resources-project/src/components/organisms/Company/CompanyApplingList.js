@@ -23,7 +23,7 @@ function CompanyApplingList (){
     return(
         <>
           <div className="rowT">
-            <table className="company-table">
+            <table className="company-table company-top">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>

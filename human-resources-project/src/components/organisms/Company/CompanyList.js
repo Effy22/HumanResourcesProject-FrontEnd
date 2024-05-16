@@ -13,7 +13,7 @@ function CompanyList (){
   return (
     <>
       <div className="rowT">
-        <table className="company-table">
+        <table className="company-table ct-list">
           <thead>
             <tr>
               <th scope="col">ID</th>

@@ -27,7 +27,7 @@ function UpdateList (){
         <UpdateCompany companyId={initialCompany.id} initialCompany={initialCompany} onClose={handleUpdateCompanyClose} />
       ) : (
       <div className="rowT">
-        <table className="company-table">
+        <table className="company-table ">
           <thead>
             <tr>
               <th scope="col">ID</th>
