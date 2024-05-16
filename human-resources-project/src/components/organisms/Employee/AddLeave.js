@@ -15,31 +15,31 @@ function AddLeave(){
     });
 
     const LeaveTypes = {
-        ANNUAL_LEAVE: "ANNUAL_LEAVE",
-        SICK_LEAVE: "SICK_LEAVE",
-        UNPAID_LEAVE: "UNPAID_LEAVE",
-        FAMILY_LEAVE: "FAMILY_LEAVE",
-        HALF_DAY_LEAVE: "HALF_DAY_LEAVE",
-        COMPASSIONATE_LEAVE: "COMPASSIONATE_LEAVE",
-        WORK_FROM_HOME: "WORK_FROM_HOME",
+        ANNUAL_LEAVE: "ANNUAL LEAVE",
+        SICK_LEAVE: "SICK LEAVE",
+        UNPAID_LEAVE: "UNPAID LEAVE",
+        FAMILY_LEAVE: "FAMILY LEAVE",
+        HALF_DAY_LEAVE: "HALF DAY LEAVE",
+        COMPASSIONATE_LEAVE: "COMPASSIONATE LEAVE",
+        WORK_FROM_HOME: "WORK FROM HOME",
         FURLOUGH: "FURLOUGH"
     };
 
     const mapLeaveTypeToEnum = (selectedType) => {
         switch (selectedType) {
-            case "ANNUAL_LEAVE":
+            case "ANNUAL LEAVE":
                 return 0;
-            case "SICK_LEAVE":
+            case "SICK LEAVE":
                 return 1;
-            case "UNPAID_LEAVE":
+            case "UNPAID LEAVE":
                 return 2;
-            case "FAMILY_LEAVE":
+            case "FAMILY LEAVE":
                 return 3;
-            case "HALF_DAY_LEAVE":
+            case "HALF DAY LEAVE":
                 return 4;
-            case "COMPASSIONATE_LEAVE":
+            case "COMPASSIONATE LEAVE":
                 return 5;
-            case "WORK_FROM_HOME":
+            case "WORK FROM HOME":
                 return 6;
             case "FURLOUGH":
                 return 7;

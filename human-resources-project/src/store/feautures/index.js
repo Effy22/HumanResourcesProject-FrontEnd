@@ -5,6 +5,9 @@ import leaveManagerSlice from './leaveManagerSlice';
 import leaveEmployeeSlice from './leaveEmployeeSlice';
 import expensesSlice from './expensesSlice';
 import employeeSlice from './employeeSlice';
+import shiftEmployeeSlice from './shiftEmployeeSlice';
+import shiftManagerSlice from './shiftManagerSlice';
+
 
 export {
     authSlice,
@@ -13,5 +16,7 @@ export {
     companySlice,
     leaveManagerSlice,
     leaveEmployeeSlice,
-    expensesSlice
+    expensesSlice,
+    shiftEmployeeSlice,
+    shiftManagerSlice
 };

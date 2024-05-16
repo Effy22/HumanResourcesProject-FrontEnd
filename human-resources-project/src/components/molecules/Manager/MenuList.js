@@ -19,7 +19,10 @@ function MenuList({ onMenuItemClick }) {
     { id: 2, label: " Add Permission To Employee", icon: faPlane },
     { id: 3, label: " See Pending Leaves List", icon: faPeopleGroup },
     { id: 4, label: " Approve Employee Expenses", icon: faPeopleGroup },
-    { id: 5, label: " Logout", icon: faArrowRightFromBracket },
+    { id: 5, label: " Add Shift", icon: faPeopleGroup },
+    { id: 6, label: " An Employee Shift List", icon: faPeopleGroup },
+    { id: 7, label: " All Employee Shift List", icon: faPeopleGroup },
+    { id: 8, label: " Logout", icon: faArrowRightFromBracket },
 
   ];
 

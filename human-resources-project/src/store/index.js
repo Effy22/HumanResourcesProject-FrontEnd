@@ -6,7 +6,10 @@ import {
     leaveManagerSlice,
     managerSlice,
     expensesSlice,
-    employeeSlice
+    employeeSlice,
+    shiftEmployeeSlice,
+    shiftManagerSlice
+
 } from './feautures';
 
 const store = configureStore({
@@ -17,7 +20,9 @@ const store = configureStore({
         company: companySlice,
         leaveManager: leaveManagerSlice,
         leaveEmployee: leaveEmployeeSlice,
-        expenses: expensesSlice
+        expenses: expensesSlice,
+        shiftEmployee: shiftEmployeeSlice,
+        shiftManager:shiftManagerSlice
     }
 });
 

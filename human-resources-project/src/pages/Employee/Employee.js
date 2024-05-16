@@ -10,7 +10,8 @@ import { fetchFindAllMyLeaves } from '../../store/feautures/leaveEmployeeSlice';
 import AddExpenses from '../../components/organisms/Employee/AddExpenses';
 import ExpensesList from '../../components/organisms/Employee/ExpensesList';
 import {fetchAddExpenses, fetchFindAllExpenses} from '../../store/feautures/expensesSlice';
-
+import FindAllMyShifts from '../../components/organisms/Employee/FindAllMyShifts';
+import { fetchFindAllMyShifts } from '../../store/feautures/shiftEmployeeSlice';
 
 
 const Employee = () => {
@@ -18,6 +19,7 @@ const Employee = () => {
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [allLeaveList, setAllLeaveList] = useState([]);
   const [expensesList, setExpensesList] =useState([]);
+  const [myShiftList, setMyShiftList] =useState([]);
 
   const takenToken = localStorage.getItem('jwtToken');
   
@@ -40,6 +42,7 @@ useEffect(() => {
   if(takenToken){
       dispatch(fetchAddExpenses(takenToken));
       dispatch(fetchFindAllExpenses(takenToken));
+      dispatch(fetchFindAllMyShifts(takenToken));
   }else{
       console.log("Token not found in localStorage");
   }
@@ -74,6 +77,11 @@ useEffect(() => {
     setExpensesList(dispatch(fetchFindAllExpenses(token)));
   };
 
+  const handleFindAllMyShiftsClick = async () => {
+    const token =localStorage.getItem('jwtToken');
+    setMyShiftList(dispatch(fetchFindAllMyShifts(token)));
+  };
+
   
   return (
     <>
@@ -95,7 +103,7 @@ useEffect(() => {
                     {menuId === 3 && <FindAllMyLeave allLeaveList={allLeaveList} onMenuItemClick={handleFindAllMyLeavesClick}/>}
                     {menuId === 4 && <AddExpenses/>}
                     {menuId === 5 && <ExpensesList expensesList={expensesList} onMenuItemClick={handleExpensesListClick} />}
-
+                    {menuId === 6 && <FindAllMyShifts myShiftList={myShiftList} onMenuItemClick={handleFindAllMyShiftsClick} />}
                 </div>
                     
                    

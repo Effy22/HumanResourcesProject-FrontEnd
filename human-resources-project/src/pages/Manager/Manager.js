@@ -10,13 +10,16 @@ import AddLeaveForEmployee from '../../components/organisms/Manager/AddLeaveForE
 import AddEmployee from '../../components/organisms/Manager/AddEmployee';
 import EmployeeList from '../../components/organisms/Manager/EmployeeList';
 import ApproveExpenses from '../../components/organisms/Manager/ApproveExpenses'; 
-
+import AddShift from '../../components/organisms/Manager/AddShift';
+import FindShiftsOfEmployee from '../../components/organisms/Manager/FindShiftsOfEmployee';
+import FindAllShiftsOfEmployees from '../../components/organisms/Manager/FindAllShiftsOfEmployees';
 
 const Manager = () => {
   const dispatch=useDispatch();
   const [menuId, setMenuId] = useState(0); // Menü ID'sini tutacak state
   const [pendingLeaveList, setPendingLeaveList] = useState([]);
   const [pendingExpensesList, setPendingExpensesList] =useState([]);
+  const [allShiftList, setAllShiftList] = useState([]);
   
   
   const takenToken = localStorage.getItem('jwtToken');
@@ -32,7 +35,7 @@ useEffect(() => {
 }, [dispatch, takenToken]);
 
   const handleMenuItemClick = (id) => {
-    if (id === 5) {
+    if (id === 8) {
       localStorage.removeItem('jwtToken'); 
       window.location.href = '/'; 
     } else {
@@ -50,14 +53,19 @@ useEffect(() => {
     setPendingExpensesList(dispatch(fetchFindAllPendingExpenses(token)));
   };
 
+  const handleShiftListClick = async () => {
+    const token = localStorage.getItem('jwtToken');
+    setAllShiftList(dispatch(fetchApproveExpenses(token)));
+  };
+
   return (
     <>
-            <div className= "container">
+      <div className= "container">
               <div className="rowC mt-5 p-3 border border-primary arround-1">
                   <Header />
               </div>
 
-            <div className="rowC mt-3 p-3 border border-success">
+          <div className="rowC mt-3 p-3 border border-success">
                 <div className="col=3">
                     <MenuList onMenuItemClick={handleMenuItemClick} />
                 </div>
@@ -67,12 +75,14 @@ useEffect(() => {
                     {menuId === 2 && <AddLeaveForEmployee/>}
                     {menuId === 3 && <PendingLeaveList pendingLeaveList={pendingLeaveList} onMenuItemClick ={handleViewPendingLeavesClick} />}
                     {menuId === 4 && <ApproveExpenses pendingExpensesList={pendingExpensesList} onMenuItemClick ={handleApproveExpensesClick} />}
-                   
-                  </div>
+                    {menuId === 5 && <AddShift />}
+                    {menuId === 6 && <FindShiftsOfEmployee />}
+                    {menuId === 7 && <FindAllShiftsOfEmployees allShiftList={allShiftList} onMenuItemClick={handleShiftListClick}/>}
+                </div>
             <div>
         </div>
 
-        </div>
+      </div>
       
     </>
   )

@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBuilding, faPeopleGroup, faPersonCircleCheck, faPersonCirclePlus, faPlane, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faCog,faCalendarAlt, faPeopleGroup, faPersonCircleCheck, faPersonCirclePlus, faPlane, faUser, faUsers, faFileInvoiceDollar, faInfoCircle, faHandshake } from "@fortawesome/free-solid-svg-icons";
 
 
 function MenuItem({ label, icon, onClick, id }) {
@@ -14,13 +14,13 @@ function MenuItem({ label, icon, onClick, id }) {
 
 function MenuList({ onMenuItemClick }) {
   const menuList = [
-    { id: 0, label: " Change Password ", icon: faPersonCirclePlus },
+    { id: 0, label: " Change Password ", icon: faCog },
     { id: 1, label: " Update Employee ", icon: faUser },
-    { id: 2, label: " Add Leave ", icon: faPlane },
-    { id: 3, label: " Find All My Leaves ", icon: faPlane },
-    { id: 4, label: " Add Expense ", icon: faPeopleGroup },
-    { id: 5, label: " Expenses List", icon: faPeopleGroup },
-    { id: 6, label: " Get All My Shifts ", icon: faArrowRightFromBracket },
+    { id: 2, label: " Add Leave ", icon: faCalendarAlt },
+    { id: 3, label: " My Leaves ", icon: faPlane },
+    { id: 4, label: " Add Expense ", icon: faFileInvoiceDollar },
+    { id: 5, label: " Expenses List", icon: faInfoCircle },
+    { id: 6, label: " My Shifts ", icon: faHandshake },
     { id: 7, label: " Logout", icon: faArrowRightFromBracket },
   ];
 

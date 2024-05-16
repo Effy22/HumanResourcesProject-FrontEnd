@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function FindAllMyLeave(){
     const dispatch = useDispatch();
     const allLeaveList = useSelector(state => state.leaveEmployee.allLeaveList);
-    console.log("allLeaveList:", allLeaveList);
+    
 
     /*if (!allLeaveList) {
       return <div className="loadingList">Loading...</div>;
